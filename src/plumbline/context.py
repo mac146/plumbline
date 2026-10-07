@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from datetime import datetime
 
 from .drift import Ignores, evaluate
@@ -9,6 +10,20 @@ from .glossary import Glossary
 from .memory import Memory
 from .probes import LiveState, snapshot
 from .store import Workspace, utcnow
+
+
+def _drifted_services(flags) -> set[str]:
+    """Compose services whose container the glossary says changed since it was confirmed."""
+    return {f.container.service for f in flags if f.kind == "meaning_changed" and f.container and f.container.service}
+
+
+def _caution(text: str, drifted: set[str]) -> str:
+    """Opt-in (config `stale_caution`): a remembered fact that names a drifted service may no longer be true."""
+    hits = sorted(s for s in drifted if re.search(rf"(?<![\w-]){re.escape(s)}(?![\w-])", text))
+    if not hits:
+        return ""
+    return (f"  [CAUTION: the glossary reports the container for {', '.join(hits)} changed since this was "
+            "recorded; this fact may be stale. Verify with the user before acting on it.]")
 
 
 def build(ws: Workspace, state: LiveState | None = None, now: datetime | None = None) -> str:
@@ -22,9 +37,14 @@ def build(ws: Workspace, state: LiveState | None = None, now: datetime | None = 
     unverified = mem.unverified()
     out: list[str] = ["# Plumbline context", ""]
 
+    resolved, flags = [], []
+    if state.containers is not None:
+        resolved, flags = evaluate(state.containers, Glossary(ws), Ignores(ws), now)
+    drifted = _drifted_services(flags) if cfg.get("stale_caution") else set()
+
     out += ["## Stable facts (remembered; safe to rely on)"]
-    out += [f"- {e['text']}" + (f" (asserted durable: {e['why']})" if e.get("why") else "") for e in fresh] \
-        or ["- (none yet)"]
+    out += [f"- {e['text']}" + (f" (asserted durable: {e['why']})" if e.get("why") else "") + _caution(e["text"], drifted)
+            for e in fresh] or ["- (none yet)"]
     if forced:
         out += ["", "## Stored by human override (not classified; treat with care)"]
         out += [f"- {e['text']} (reason: {e.get('forced_reason', '?')})" for e in forced]
@@ -46,11 +66,9 @@ def build(ws: Workspace, state: LiveState | None = None, now: datetime | None = 
     for k, v in state.env.items():
         out.append(f"- env {k}={v}")
 
-    flags = []
     if state.containers is None:
         out.append(f"- docker: unavailable ({state.docker_error}); container state UNKNOWN, do not assume.")
     else:
-        resolved, flags = evaluate(state.containers, Glossary(ws), Ignores(ws), now)
         out += [f"- container `{r.container.name}` = {r.meaning}" for r in resolved]
         if not state.containers:
             out.append("- docker: no containers running")

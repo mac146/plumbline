@@ -26,9 +26,10 @@ from pathlib import Path
 
 from plumbline.evaluate import wilson
 
-ARM_ORDER = ["A", "B", "Bclean", "C"]
+ARM_ORDER = ["A", "B", "Bclean", "C", "C2"]
 COMPARISONS = [("C", "Bclean", "primary"), ("C", "B", "secondary"), ("B", "Bclean", "secondary"),
-               ("C", "A", "secondary")]
+               ("C", "A", "secondary"), ("C2", "C", "secondary"), ("C2", "B", "secondary"),
+               ("C2", "A", "secondary")]
 
 
 def load(paths: list[Path], label: str) -> list[dict]:
@@ -47,10 +48,16 @@ def _med(xs: list[float]) -> str:
     return f"{statistics.median(xs):g} [{min(xs):g}-{max(xs):g}]" if xs else "n/a"
 
 
+def task_label(r: dict) -> str:
+    """legacy rows keep their bare task id; other scenarios are shown as 'scenario:task'."""
+    sc = r.get("scenario", "legacy")
+    return r["task"] if sc == "legacy" else f"{sc}:{r['task']}"
+
+
 def summarize(rows: list[dict]) -> dict:
     cells: dict[tuple, list[dict]] = defaultdict(list)
     for r in rows:
-        cells[(r["task"], r["arm"])].append(r)
+        cells[(task_label(r), r["arm"])].append(r)
     out = {}
     for key, rs in cells.items():
         before = [r.get("outcome_before_answer", r["outcome"]) for r in rs]
@@ -87,10 +94,14 @@ def decisions(summary: dict) -> list[dict]:
     rows = []
     tasks = sorted({t for t, _ in summary})
     for task in tasks:
+        arms = {a for t, a in summary if t == task}
+        primary = ("C", "Bclean") if "Bclean" in arms else ("C", "B")  # twins has no B-clean: B is the memory arm
+        legacy = ":" not in task
         for metric in ("wrong_target", "reexplain"):
-            if metric == "reexplain" and task == "T3":
-                continue
-            for x, y, tier in COMPARISONS:
+            if metric == "reexplain" and (task == "T3" or not legacy):
+                continue  # re-explanations are only scored in the legacy scenario
+            for x, y, _tier in COMPARISONS:
+                tier = "primary" if (x, y) == primary else "secondary"
                 if task == "T4" and "A" in (x, y):
                     continue  # control: A is not comparable
                 sx, sy = summary.get((task, x)), summary.get((task, y))
@@ -135,8 +146,11 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="bench.analyze")
     ap.add_argument("paths", nargs="+", type=Path)
     ap.add_argument("--label", default="main")
+    ap.add_argument("--model", help="only rows requested with this model (rows without the field count as Sonnet)")
     args = ap.parse_args(argv)
     rows = load(args.paths, args.label)
+    if args.model:
+        rows = [r for r in rows if r.get("model_requested", "claude-sonnet-4-6") == args.model]
     if not rows:
         print(f"no rows with label '{args.label}'")
         return 1

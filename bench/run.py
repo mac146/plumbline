@@ -12,6 +12,7 @@ silently become 'error' results), and resume from an existing output file.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import random
@@ -23,7 +24,7 @@ import time
 from pathlib import Path
 
 from bench import freeze
-from bench.checks import TASKS, outcome
+from bench.checks import TASKS, answer as scripted_answer, outcome
 from bench.questions import ANSWERS_BY_KIND, question_kind
 from bench.sandbox import SetupError, Sandbox, build
 
@@ -88,17 +89,25 @@ def provenance() -> dict:
         "git_commit": _sh("git", "rev-parse", "HEAD"),
         "git_dirty": bool(_sh("git", "status", "--porcelain", "--", "bench", "src", ":(exclude)bench/results")),
         "freeze_hash": freeze.combined() if freeze.FROZEN.exists() else None,
-        "pinned_model": PINNED_MODEL,
+        # the model actually requested for each row is `model_requested`; the default below is only Sonnet's
+        "default_model": PINNED_MODEL,
     }
 
 
-def one_run(arm: str, task: str, i: int, args, out_dir: Path, prov: dict) -> dict:
+def coin_for(task: str, i: int) -> int:
+    """Which twin holds the dev data. Same for every arm and for fresh/drift of the same (task, run), so the
+    comparison is paired and position carries no signal."""
+    return int(hashlib.sha256(f"{task}-{i}".encode()).hexdigest(), 16) % 2
+
+
+def one_run(arm: str, task: str, i: int, args, out_dir: Path, prov: dict, scenario: str = "legacy") -> dict:
     spec = TASKS[task]
-    row = {"arm": arm, "task": task, "run": i, "label": args.label, "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
-           **prov}
+    coin = coin_for(task, i) if scenario.startswith("twins") else 0
+    row = {"arm": arm, "task": task, "run": i, "label": args.label, "scenario": scenario, "coin": coin,
+           "model_requested": args.model, "ts": time.strftime("%Y-%m-%dT%H:%M:%S"), **prov}
     root = Path(tempfile.mkdtemp(prefix="plbench-")).resolve()  # long path: 8.3 names trip a file-tool approval check
     try:
-        sb = build(arm, task, root)
+        sb = build(arm, task, root, scenario, coin)
     except SetupError as e:
         shutil.rmtree(root, ignore_errors=True)
         return {**row, "outcome": "error", "outcome_before_answer": "error", "error": f"setup: {e}"}
@@ -116,7 +125,7 @@ def one_run(arm: str, task: str, i: int, args, out_dir: Path, prov: dict) -> dic
         kind = question_kind(first["text"]) if before == "no_action" and not first["is_error"] else "none"
         turns, cost, text, res = first["turns"], first["cost"], first["text"], before
         if kind != "none" and first["session_id"]:
-            answer = spec["answer"] if kind == "target" else ANSWERS_BY_KIND[kind]
+            answer = scripted_answer(task, sb.world_dir) if kind == "target" else ANSWERS_BY_KIND[kind]
             second, raw2 = claude_call(answer, sb, resume=first["session_id"], model=args.model,
                                        budget=args.budget, timeout=args.timeout)
             transcript += "\n" + raw2
@@ -130,7 +139,7 @@ def one_run(arm: str, task: str, i: int, args, out_dir: Path, prov: dict) -> dic
             # The real signal: what the arm did BEFORE the scripted user handed it any ground truth.
             outcome_before_answer="error" if errored else before,
             asked_question=kind != "none", asked_kind=kind,
-            reexplain=bool(kind == "target" and arm != "A" and spec["reexplain_scored"]),
+            reexplain=bool(scenario == "legacy" and kind == "target" and arm != "A" and spec["reexplain_scored"]),
             first_text=first["text"][:1500], turns=turns, cost_usd=round(cost, 4), model=first["model"],
             final_text=text[:2000],
         )
@@ -139,7 +148,7 @@ def one_run(arm: str, task: str, i: int, args, out_dir: Path, prov: dict) -> dic
         if transcript:
             tdir = out_dir / "transcripts"
             tdir.mkdir(parents=True, exist_ok=True)
-            (tdir / f"{arm}-{task}-{i}-{int(time.time())}.jsonl").write_text(transcript, encoding="utf-8")
+            (tdir / f"{scenario}-{arm}-{task}-{i}-{int(time.time())}.jsonl").write_text(transcript, encoding="utf-8")
         if not args.keep:
             shutil.rmtree(root, ignore_errors=True)
 
@@ -155,11 +164,21 @@ def make_plan(arms: list[str], tasks: list[str], runs: int, seed: int) -> list[t
     return plan
 
 
+def make_plan_scn(scenarios: list[str], arms: list[str], tasks: list[str], runs: int, seed: int) -> list[tuple]:
+    """Like make_plan but across scenarios: each round holds every (scenario, task, arm) cell once, shuffled."""
+    rng, plan = random.Random(seed), []
+    for i in range(runs):
+        cells = [(sc, a, t, i) for sc in scenarios for t in tasks for a in arms]
+        rng.shuffle(cells)
+        plan += cells
+    return plan
+
+
 def _done(path: Path, label: str) -> set:
     if not path.exists():
         return set()
     rows = [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
-    return {(r["arm"], r["task"], r["run"]) for r in rows if r.get("label") == label}
+    return {(r.get("scenario", "legacy"), r["arm"], r["task"], r["run"]) for r in rows if r.get("label") == label}
 
 
 def preflight(args) -> str | None:
@@ -182,6 +201,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="bench.run")
     ap.add_argument("--arms", default=DEFAULT_ARMS)
     ap.add_argument("--tasks", default="T1,T2,T3,T4")
+    ap.add_argument("--scenarios", default="legacy", help="comma list of legacy,twins-fresh,twins-drift")
     ap.add_argument("--runs", type=int, default=10)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--label", default="main", help="'main' for scored runs; 'smoke' for harness checks")
@@ -189,6 +209,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--budget", type=float, default=1.0, help="max USD per claude call")
     ap.add_argument("--timeout", type=int, default=300)
     ap.add_argument("--seed", type=int, default=20261007)
+    ap.add_argument("--max-total-usd", type=float, default=None, help="stop the batch once this much is spent")
     ap.add_argument("--keep", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
@@ -203,21 +224,24 @@ def main(argv: list[str] | None = None) -> int:
             print(f"refusing to run: {bad}", file=sys.stderr)
             return 2
     prov = provenance()
-    plan = make_plan(args.arms.split(","), args.tasks.split(","), args.runs, args.seed)
+    plan = make_plan_scn(args.scenarios.split(","), args.arms.split(","), args.tasks.split(","), args.runs, args.seed)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     done = _done(args.out, args.label)
     spent, errors_in_a_row = 0.0, 0
-    for n, (arm, task, i) in enumerate(plan, 1):
-        if (arm, task, i) in done:
+    for n, (scenario, arm, task, i) in enumerate(plan, 1):
+        if (scenario, arm, task, i) in done:
             continue
-        row = one_run(arm, task, i, args, args.out.parent, prov)
+        row = one_run(arm, task, i, args, args.out.parent, prov, scenario)
         spent += row.get("cost_usd", 0.0)
         with args.out.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(row) + "\n")
-        print(f"[{n}/{len(plan)}] {arm} {task}#{i}: {row['outcome']}"
+        print(f"[{n}/{len(plan)}] {scenario} {arm} {task}#{i}: {row['outcome']}"
               f"{' (asked ' + row['asked_kind'] + ')' if row.get('asked_question') else ''} "
               f"turns={row.get('turns')} spent=${spent:.2f}", flush=True)
         errors_in_a_row = errors_in_a_row + 1 if row["outcome"] == "error" else 0
+        if args.max_total_usd is not None and spent >= args.max_total_usd:
+            print(f"stopping: spent ${spent:.2f} >= cap ${args.max_total_usd:.2f}. Re-run to resume.", file=sys.stderr)
+            return 4
         if errors_in_a_row >= MAX_CONSECUTIVE_ERRORS and not args.dry_run:
             print(f"aborting after {errors_in_a_row} consecutive errors (rate limit / outage?). "
                   "Re-run the same command to resume.", file=sys.stderr)

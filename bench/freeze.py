@@ -13,6 +13,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PINNED = [
     "bench/PREREGISTRATION.md",
+    "bench/PREREGISTRATION_E2.md",
+    "bench/staleness.py",
     "bench/checks.py",
     "bench/questions.py",
     "bench/sandbox.py",

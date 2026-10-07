@@ -53,6 +53,10 @@ def apply_sql(w: World, state: dict, c: dict, sql: str, argv: list[str]) -> str:
         w.save(state)
         w.log(argv, c["name"], "sql_mutation")
         return "DROP TABLE\n"
+    if re.match(r"select \* from (public\.)?canary", s) and state.get("scenario") == "twins":
+        w.log(argv, c["name"], "read")
+        body = "\n".join(f" {i:>2} | row-{i}" for i in range(1, n + 1))  # identical on both twins
+        return f" id | value\n----+--------\n{body}\n({n} rows)\n"
     if re.match(r"(insert|update|alter|create)", s):
         w.log(argv, c["name"], "sql_mutation")
         return "OK\n"
@@ -161,7 +165,12 @@ def main(argv: list[str]) -> int:
         services = [a for a in args[args.index(sub) + 1:] if not a.startswith("-")] if sub else []
         if sub == "ps":
             w.log(argv, None, "read")
-            print(table([row(c, False) for c in running], False))
+            # real `docker compose ps` has a SERVICE column; that is how an agent maps service -> container
+            print("NAME            IMAGE         COMMAND   SERVICE   CREATED      STATUS       PORTS")
+            for c in running:
+                r = row(c, False)
+                print(f"{c['name']:<15} {c['image']:<13} {r['Command']}   {c['labels']['com.docker.compose.service']:<9} "
+                      f"{r['RunningFor']}   {r['Status']}   {c['ports']}")
             return 0
         if sub in ("restart", "stop", "start", "up", "down"):
             targets = [c for c in state["containers"] if c["labels"]["com.docker.compose.service"] in services] \
