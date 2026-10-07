@@ -1,0 +1,55 @@
+{"text":"Run the linter before every commit; CI rejects unformatted code","label":"stable"}
+{"text":"The main branch is protected and requires one approving review","label":"stable"}
+{"text":"Containers must run as a non-root user, no exceptions","label":"stable"}
+{"text":"Anything touching billing goes through the ledger service, never around it","label":"stable"}
+{"text":"Config is layered: defaults, then environment file, then process env","label":"stable"}
+{"text":"Don't add dependencies without checking the license allowlist","label":"stable"}
+{"text":"Idempotency keys are required on every POST that creates money movement","label":"stable"}
+{"text":"The mobile app and the web app share one design token package","label":"stable"}
+{"text":"Our rollback plan is always a redeploy of the previous tagged image","label":"stable"}
+{"text":"Timestamps are stored in UTC and converted at the edge","label":"stable"}
+{"text":"Why Kafka: we need replayable event history for audits","label":"stable"}
+{"text":"Error responses carry a stable machine-readable code plus a human message","label":"stable"}
+{"text":"Cron jobs live in the scheduler service, not in application containers","label":"stable"}
+{"text":"A feature isn't done until it has a migration, a test and a doc entry","label":"stable"}
+{"text":"Search indexing happens asynchronously via the outbox table","label":"stable"}
+{"text":"Branch names start with the ticket id followed by a short slug","label":"stable"}
+{"text":"Workers pull jobs; the API never pushes work directly to them","label":"stable"}
+{"text":"Production data must never be copied to a developer laptop","label":"stable"}
+{"text":"Secrets rotate every ninety days via the rotation workflow","label":"stable"}
+{"text":"Our Postgres schema uses snake_case and singular table names","label":"stable"}
+{"text":"The gateway terminates TLS; services speak plain HTTP inside the mesh","label":"stable"}
+{"text":"Decision: we vendor the PDF library because upstream releases are unreliable","label":"stable"}
+{"text":"Local development runs the API on port 3000 by convention","label":"semi_stable"}
+{"text":"The payments sandbox base URL is https://pay-sandbox.example.com","label":"semi_stable"}
+{"text":"We target Java 17 until the platform team approves 21","label":"semi_stable"}
+{"text":"The importer is a stopgap and will be replaced by the streaming pipeline","label":"semi_stable"}
+{"text":"Use React 18 APIs only; the codebase hasn't adopted 19 yet","label":"semi_stable"}
+{"text":"The CDN origin is cdn-origin.example.com:8443","label":"semi_stable"}
+{"text":"I'm on the fix branch and the container's up","label":"volatile"}
+{"text":"The API is returning 502s right now","label":"volatile"}
+{"text":"Looks like the worker crashed again","label":"volatile"}
+{"text":"The db container's healthy but the app one is restarting","label":"volatile"}
+{"text":"Backend is up on 3001","label":"volatile"}
+{"text":"The deploy went out about twenty minutes back","label":"volatile"}
+{"text":"We're blocked on the vendor's reply","label":"volatile"}
+{"text":"The repo has uncommitted changes in three files","label":"volatile"}
+{"text":"That bug is fixed in the branch I'm working on","label":"volatile"}
+{"text":"Tests pass locally but the CI run is red","label":"volatile"}
+{"text":"Only the first of the two databases has data","label":"volatile"}
+{"text":"Redis ran out of memory during the load test","label":"volatile"}
+{"text":"The VM got rebooted by the host provider","label":"volatile"}
+{"text":"The latest migration is half applied","label":"volatile"}
+{"text":"Grafana shows the error rate spiking since the release","label":"volatile"}
+{"text":"The service account token expired and nobody rotated it","label":"volatile"}
+{"text":"I can't connect to the staging database from my machine","label":"volatile"}
+{"text":"The proxy is serving the old build from cache","label":"volatile"}
+{"text":"Our sprint ends on Friday and the demo is on Thursday","label":"volatile"}
+{"text":"The migration job is processing about 500 rows per second","label":"volatile"}
+{"text":"The webhook endpoint is returning 404 after the rename","label":"volatile"}
+{"text":"The user table has 12 million rows","label":"volatile"}
+{"text":"Both replicas are in sync now","label":"volatile"}
+{"text":"lol","label":"junk"}
+{"text":"yes please","label":"junk"}
+{"text":"...","label":"junk"}
+{"text":"see ticket","label":"junk"}

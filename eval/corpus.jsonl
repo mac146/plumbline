@@ -1,0 +1,50 @@
+{"text":"We always run database migrations with alembic from db/migrations","label":"stable"}
+{"text":"Services never share a database; each service owns its own schema","label":"stable"}
+{"text":"Use pnpm, not npm, because the lockfile format is shared with CI","label":"stable"}
+{"text":"The dev database is the postgres service defined in docker-compose.yml","label":"stable"}
+{"text":"All API errors are mapped to user-facing copy in src/errors.js","label":"stable"}
+{"text":"Tests live next to the code they cover in __tests__ folders","label":"stable"}
+{"text":"We chose Postgres over MongoDB because reporting needs relational joins","label":"stable"}
+{"text":"Never commit .env files; copy .env.example to .env instead","label":"stable"}
+{"text":"Feature flags are read once at startup and never hot-reloaded","label":"stable"}
+{"text":"Public endpoints must be rate limited at the gateway layer","label":"stable"}
+{"text":"Money amounts are stored as integer cents to avoid float rounding","label":"stable"}
+{"text":"The frontend never calls the database directly, only the REST API","label":"stable"}
+{"text":"Commit messages follow the conventional commits format","label":"stable"}
+{"text":"Background jobs must be idempotent because the queue retries on failure","label":"stable"}
+{"text":"Prefer small pure functions in the domain layer over class hierarchies","label":"stable"}
+{"text":"The staging environment mirrors production except for scaled-down instance sizes","label":"stable"}
+{"text":"Docker images are built in CI and tagged with the git sha at build time","label":"stable"}
+{"text":"The prod database is only reachable through the bastion host","label":"stable"}
+{"text":"The API client is pinned to version 2.3.1 because 2.4 broke pagination","label":"semi_stable"}
+{"text":"Use the temporary workaround in utils/dates.py until the upstream fix ships","label":"semi_stable"}
+{"text":"The staging API lives at https://staging.example.com/api","label":"semi_stable"}
+{"text":"Redis is exposed on port 6380 in the local compose file","label":"semi_stable"}
+{"text":"We are migrating from Jest to Vitest across the monorepo","label":"semi_stable"}
+{"text":"The legacy billing module is deprecated and should not get new features","label":"semi_stable"}
+{"text":"Node 20 is required by the build image","label":"semi_stable"}
+{"text":"Auth callback is whitelisted for localhost:5173 in the OAuth client","label":"semi_stable"}
+{"text":"We are currently on branch feature/login","label":"volatile"}
+{"text":"The dev database container is running right now on port 5433","label":"volatile"}
+{"text":"Container pg-7f3a is the local dev database and it is up","label":"volatile"}
+{"text":"HEAD is at 3fa2c1d after the last rebase","label":"volatile"}
+{"text":"Docker is running and the api container was started this morning","label":"volatile"}
+{"text":"I just restarted the api container so the logs are fresh","label":"volatile"}
+{"text":"The tests are red at the moment because of the flaky payment spec","label":"volatile"}
+{"text":"Branch main is checked out in the other worktree","label":"volatile"}
+{"text":"The deploy to prod finished on 2026-10-07 at 14:32","label":"volatile"}
+{"text":"The worker process pid 4821 is holding the lock","label":"volatile"}
+{"text":"The api container was restarted a minute ago","label":"volatile"}
+{"text":"We're working on feature/login and haven't merged yet","label":"volatile"}
+{"text":"Staging is pointed at the new database since the cutover","label":"volatile"}
+{"text":"The build is failing on main","label":"volatile"}
+{"text":"A deploy to production is in progress","label":"volatile"}
+{"text":"The migration hasn't been applied to the dev database yet","label":"volatile"}
+{"text":"The postgres container 7f3a9c1d2e4b is the one with the seeded data","label":"volatile"}
+{"text":"Port 3000 is already taken by another process","label":"volatile"}
+{"text":"There are two postgres containers and only the second one is the real dev DB","label":"volatile"}
+{"text":"ok","label":"junk"}
+{"text":"fix it","label":"junk"}
+{"text":"TODO","label":"junk"}
+{"text":"asdf asdf","label":"junk"}
+{"text":"1234 5678","label":"junk"}

@@ -1,0 +1,33 @@
+{"text":"The redis container has been up for three hours","label":"volatile"}
+{"text":"I'm on the hotfix branch right now","label":"volatile"}
+{"text":"Someone is running a load test against staging","label":"volatile"}
+{"text":"The queue is backed up with 4000 jobs","label":"volatile"}
+{"text":"Kafka was restarted after the incident earlier","label":"volatile"}
+{"text":"Prod is down","label":"volatile"}
+{"text":"The latest deploy broke checkout","label":"volatile"}
+{"text":"The disk on the CI runner is almost full","label":"volatile"}
+{"text":"My local database still has the old schema","label":"volatile"}
+{"text":"I haven't pushed these changes yet","label":"volatile"}
+{"text":"The feature branch is two commits behind main","label":"volatile"}
+{"text":"Jenkins is stuck on the integration stage","label":"volatile"}
+{"text":"The second container is the decoy so ignore it","label":"volatile"}
+{"text":"The PR is waiting on review","label":"volatile"}
+{"text":"The certificate expires tomorrow","label":"volatile"}
+{"text":"Nobody has restarted the worker since Tuesday","label":"volatile"}
+{"text":"The test database got wiped an hour ago","label":"volatile"}
+{"text":"Local postgres is listening on 5433","label":"volatile"}
+{"text":"The cache is cold after the restart","label":"volatile"}
+{"text":"The import job is still running","label":"volatile"}
+{"text":"Secrets are loaded from the vault at startup, never from files","label":"stable"}
+{"text":"Each microservice exposes a health endpoint used by the load balancer","label":"stable"}
+{"text":"Database schema changes require a reversible migration","label":"stable"}
+{"text":"Frontend state lives in Zustand stores, one per feature","label":"stable"}
+{"text":"Retry with exponential backoff when calling the payment provider","label":"stable"}
+{"text":"Releases are cut from main and tagged by the release workflow","label":"stable"}
+{"text":"Logs are structured JSON and must never contain customer emails","label":"stable"}
+{"text":"The CI image uses Python 3.12","label":"semi_stable"}
+{"text":"The OAuth redirect URI is http://localhost:5173/callback","label":"semi_stable"}
+{"text":"Temporary feature flag NEW_CHECKOUT should be removed after launch","label":"semi_stable"}
+{"text":"Pinned lodash to 4.17.21 due to a regression","label":"semi_stable"}
+{"text":"wip","label":"junk"}
+{"text":"see above","label":"junk"}

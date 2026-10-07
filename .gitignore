@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.plumbline/
+# Derived from private work repos / transcripts: never publish
+eval/*.local.jsonl

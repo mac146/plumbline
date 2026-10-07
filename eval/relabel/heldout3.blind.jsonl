@@ -1,0 +1,55 @@
+{"text": "The API is returning 502s right now", "label": ""}
+{"text": "Cron jobs live in the scheduler service, not in application containers", "label": ""}
+{"text": "The VM got rebooted by the host provider", "label": ""}
+{"text": "The service account token expired and nobody rotated it", "label": ""}
+{"text": "The deploy went out about twenty minutes back", "label": ""}
+{"text": "The mobile app and the web app share one design token package", "label": ""}
+{"text": "Don't add dependencies without checking the license allowlist", "label": ""}
+{"text": "Only the first of the two databases has data", "label": ""}
+{"text": "The main branch is protected and requires one approving review", "label": ""}
+{"text": "lol", "label": ""}
+{"text": "The repo has uncommitted changes in three files", "label": ""}
+{"text": "Run the linter before every commit; CI rejects unformatted code", "label": ""}
+{"text": "Config is layered: defaults, then environment file, then process env", "label": ""}
+{"text": "Grafana shows the error rate spiking since the release", "label": ""}
+{"text": "The gateway terminates TLS; services speak plain HTTP inside the mesh", "label": ""}
+{"text": "Search indexing happens asynchronously via the outbox table", "label": ""}
+{"text": "...", "label": ""}
+{"text": "I can't connect to the staging database from my machine", "label": ""}
+{"text": "The migration job is processing about 500 rows per second", "label": ""}
+{"text": "Our sprint ends on Friday and the demo is on Thursday", "label": ""}
+{"text": "The latest migration is half applied", "label": ""}
+{"text": "Error responses carry a stable machine-readable code plus a human message", "label": ""}
+{"text": "Anything touching billing goes through the ledger service, never around it", "label": ""}
+{"text": "Production data must never be copied to a developer laptop", "label": ""}
+{"text": "Branch names start with the ticket id followed by a short slug", "label": ""}
+{"text": "Why Kafka: we need replayable event history for audits", "label": ""}
+{"text": "Decision: we vendor the PDF library because upstream releases are unreliable", "label": ""}
+{"text": "The CDN origin is cdn-origin.example.com:8443", "label": ""}
+{"text": "I'm on the fix branch and the container's up", "label": ""}
+{"text": "Both replicas are in sync now", "label": ""}
+{"text": "The payments sandbox base URL is https://pay-sandbox.example.com", "label": ""}
+{"text": "That bug is fixed in the branch I'm working on", "label": ""}
+{"text": "The proxy is serving the old build from cache", "label": ""}
+{"text": "Timestamps are stored in UTC and converted at the edge", "label": ""}
+{"text": "We're blocked on the vendor's reply", "label": ""}
+{"text": "The user table has 12 million rows", "label": ""}
+{"text": "Idempotency keys are required on every POST that creates money movement", "label": ""}
+{"text": "Redis ran out of memory during the load test", "label": ""}
+{"text": "Secrets rotate every ninety days via the rotation workflow", "label": ""}
+{"text": "Our rollback plan is always a redeploy of the previous tagged image", "label": ""}
+{"text": "yes please", "label": ""}
+{"text": "A feature isn't done until it has a migration, a test and a doc entry", "label": ""}
+{"text": "Tests pass locally but the CI run is red", "label": ""}
+{"text": "Local development runs the API on port 3000 by convention", "label": ""}
+{"text": "Looks like the worker crashed again", "label": ""}
+{"text": "Our Postgres schema uses snake_case and singular table names", "label": ""}
+{"text": "The importer is a stopgap and will be replaced by the streaming pipeline", "label": ""}
+{"text": "The db container's healthy but the app one is restarting", "label": ""}
+{"text": "Backend is up on 3001", "label": ""}
+{"text": "Workers pull jobs; the API never pushes work directly to them", "label": ""}
+{"text": "Containers must run as a non-root user, no exceptions", "label": ""}
+{"text": "Use React 18 APIs only; the codebase hasn't adopted 19 yet", "label": ""}
+{"text": "The webhook endpoint is returning 404 after the rename", "label": ""}
+{"text": "We target Java 17 until the platform team approves 21", "label": ""}
+{"text": "see ticket", "label": ""}

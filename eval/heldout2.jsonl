@@ -1,0 +1,33 @@
+{"text":"The mongo container exited with code 137 overnight","label":"volatile"}
+{"text":"Our staging cluster is on version 4 of the helm chart right now","label":"volatile"}
+{"text":"Alice is debugging the websocket reconnect issue","label":"volatile"}
+{"text":"The nightly job didn't run last night","label":"volatile"}
+{"text":"There are 14 unmerged branches in the repo at the moment","label":"volatile"}
+{"text":"The dev stack uses the container called web-1 for the frontend","label":"volatile"}
+{"text":"Elasticsearch is yellow and reindexing","label":"volatile"}
+{"text":"The VPN is flaky today","label":"volatile"}
+{"text":"The old postgres volume was dropped after the upgrade","label":"volatile"}
+{"text":"The release candidate is tagged v2.0.0-rc1 and awaiting QA","label":"volatile"}
+{"text":"I switched the compose file to use the replica","label":"volatile"}
+{"text":"The service mesh is rejecting traffic from the batch namespace","label":"volatile"}
+{"text":"We have an open incident with the payments provider","label":"volatile"}
+{"text":"The failing test is test_refund_flow and it fails on CI only","label":"volatile"}
+{"text":"The local seed data was loaded from the March snapshot","label":"volatile"}
+{"text":"The primary replica lags behind by about 30 seconds","label":"volatile"}
+{"text":"Disk usage on the dev box is at 91 percent","label":"volatile"}
+{"text":"Someone force-pushed over main again","label":"volatile"}
+{"text":"The sandbox account was reset and its API keys rotated","label":"volatile"}
+{"text":"The hotfix is in review and not merged","label":"volatile"}
+{"text":"Authorization checks happen in middleware before any handler runs","label":"stable"}
+{"text":"Prefer composition over inheritance in the plugin system","label":"stable"}
+{"text":"Never log full card numbers, only the last four digits","label":"stable"}
+{"text":"The monorepo uses one package per bounded context","label":"stable"}
+{"text":"Integration tests run against a disposable database created per test run","label":"stable"}
+{"text":"Domain events are published after the transaction commits","label":"stable"}
+{"text":"Component props are typed with explicit interfaces, not inline objects","label":"stable"}
+{"text":"Our SDK requires Node 18 or newer","label":"semi_stable"}
+{"text":"Until the vendor fixes the bug we call the legacy endpoint","label":"semi_stable"}
+{"text":"The sandbox gateway is https://sandbox.example.com/v2","label":"semi_stable"}
+{"text":"Pinned protobuf to 3.20.3 because newer breaks generated code","label":"semi_stable"}
+{"text":"ok thanks","label":"junk"}
+{"text":"n/a","label":"junk"}
