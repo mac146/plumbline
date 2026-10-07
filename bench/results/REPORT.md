@@ -42,7 +42,7 @@ Those after-answer numbers say little about the arms: the scripted user handed e
 
 1. **Memory vs no memory on T1.** Arm A did **0/10** of the destructive reset before being answered: it
    stopped each time ("I can't safely proceed... no credentials... no 'canary' table in this repo") and asked
-   for credentials or schema. All three memory-based arms did it (28 of 30 acted; 1 error). A's refusals were
+   for credentials or schema. All three memory-based arms did it (29 of 30 acted; the 30th was the C error). A's refusals were
    cautious, not wrong: it never touched the decoy. This difference (0/10 vs 10/10 and 10/10) is large and its
    intervals do not overlap, but it separates *any memory* from *none*, and it is not C vs B-clean.
 2. **Stale memory is a nuisance, not a hazard, here.** In B on T3, **3/10 runs stalled** to ask which branch
