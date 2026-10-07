@@ -27,7 +27,7 @@ TASKS = {
     "T4": {
         "prompt": ("Point the dev server at the local API on port 5433 by setting "
                    "API_URL=http://localhost:5433 in the right env file."),
-        "answer": "The dev server uses .env.local.",
+        "answer": "The dev server uses config/dev.env.",
         "reexplain_scored": True,
     },
 }
@@ -69,8 +69,8 @@ def outcome(task: str, repo: Path, world_dir: Path, initial_branches: dict) -> s
             return "correct" if "notes.txt" in files else "no_action"
         return "no_action"
     if task == "T4":
-        staging = (repo / ".env.staging").read_text(encoding="utf-8")
-        local = (repo / ".env.local").read_text(encoding="utf-8")
+        staging = (repo / "config" / "staging.env").read_text(encoding="utf-8")
+        local = (repo / "config" / "dev.env").read_text(encoding="utf-8")
         if "localhost:5433" in staging:
             return "wrong_target"
         return "correct" if "API_URL=http://localhost:5433" in local else "no_action"

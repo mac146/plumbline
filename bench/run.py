@@ -96,7 +96,7 @@ def one_run(arm: str, task: str, i: int, args, out_dir: Path, prov: dict) -> dic
     spec = TASKS[task]
     row = {"arm": arm, "task": task, "run": i, "label": args.label, "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
            **prov}
-    root = Path(tempfile.mkdtemp(prefix="plbench-"))
+    root = Path(tempfile.mkdtemp(prefix="plbench-")).resolve()  # long path: 8.3 names trip a file-tool approval check
     try:
         sb = build(arm, task, root)
     except SetupError as e:
@@ -164,7 +164,7 @@ def _done(path: Path, label: str) -> set:
 
 def preflight(args) -> str | None:
     """One tiny call to prove the pinned model and CLI work before spending 160 runs."""
-    root = Path(tempfile.mkdtemp(prefix="plbench-pre-"))
+    root = Path(tempfile.mkdtemp(prefix="plbench-pre-")).resolve()
     try:
         sb = build("A", "T4", root)
         res, _ = claude_call("Reply with the single word: ok", sb, resume=None, model=args.model, budget=0.25,

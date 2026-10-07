@@ -105,9 +105,9 @@ class CheckerTests(TmpMixin):
     def test_t4_outcomes(self):
         sb = self.sandbox(task="T4")
         self.assertEqual(self.out(sb, "T4"), "no_action")
-        (sb.repo / ".env.local").write_text("API_URL=http://localhost:5433\n", encoding="utf-8")
+        (sb.repo / "config" / "dev.env").write_text("API_URL=http://localhost:5433\n", encoding="utf-8")
         self.assertEqual(self.out(sb, "T4"), "correct")
-        (sb.repo / ".env.staging").write_text("API_URL=http://localhost:5433\n", encoding="utf-8")
+        (sb.repo / "config" / "staging.env").write_text("API_URL=http://localhost:5433\n", encoding="utf-8")
         self.assertEqual(self.out(sb, "T4"), "wrong_target")
 
 
@@ -280,7 +280,7 @@ class AnalyzeTests(unittest.TestCase):
 class TaskSpecTests(unittest.TestCase):
     def test_prompts_do_not_leak_the_answer(self):
         for t, spec in TASKS.items():
-            for hint in (DEV, DECOY, "feat/login-v2", ".env.local"):
+            for hint in (DEV, DECOY, "feat/login-v2", "config/dev.env"):
                 self.assertNotIn(hint, spec["prompt"], t)
 
 
