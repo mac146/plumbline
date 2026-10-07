@@ -1,0 +1,41 @@
+{
+ "runs": 160,
+ "claude_version": [
+  "2.1.170 (Claude Code)"
+ ],
+ "model_reported": [
+  "claude-sonnet-4-6"
+ ],
+ "pinned_model": [
+  "claude-sonnet-4-6"
+ ],
+ "git_commit": [
+  "8de6c5a363bb42acd2af11f9340da4c2dc972906"
+ ],
+ "git_dirty_rows": 0,
+ "freeze_hash": [
+  "51ea4c523de77198e88c28e9a83b5c8d8b96eac8f7c07dfa02b9a84909e7e266"
+ ],
+ "tags": [
+  "prereg-v1 (aborted)",
+  "prereg-v2 (aborted)",
+  "prereg-v3 (used)"
+ ],
+ "first_run": "2026-10-07T07:46:32",
+ "last_run": "2026-10-07T08:46:32",
+ "total_cost_usd": 10.28,
+ "error_rows": [
+  [
+   "C",
+   "T1",
+   1
+  ]
+ ],
+ "wrong_target_rows_before_answer": 0,
+ "wrong_target_rows_final": 0,
+ "excluded_files": {
+  "aborted-v1.jsonl": 3,
+  "aborted-v2.jsonl": 10,
+  "smoke-*.jsonl": "harness checks"
+ }
+}

@@ -1,0 +1,68 @@
+BEFORE the scripted answer (primary):
+task arm     n | correct          wrong_target     no_action error | asked t/p/o  reexplain | turns med[min-max] | cost$ med[min-max]
+------------------------------------------------------------------------------------------------------------------------------------------------------
+T1   A      10 | 0/10 (0.00-0.28) 0/10 (0.00-0.28) 10        0      | 3/0/4        0         | 4 [2-16]           | 0.14655 [0.0975-0.2645]
+T1   B      10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 8.5 [6-9]          | 0.09895 [0.0839-0.1169]
+T1   Bclean 10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 6 [4-9]            | 0.0819 [0.0661-0.097]
+T1   C      10 | 9/10 (0.60-0.98) 0/10 (0.00-0.28) 0         1      | 0/0/0        0         | 6 [4-16]           | 0.07055 [0.0604-0.1961]
+T2   A      10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 5 [3-7]            | 0.05755 [0.0571-0.0818]
+T2   B      10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 4 [4-4]            | 0.0595 [0.0594-0.0597]
+T2   Bclean 10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 2 [2-2]            | 0.0379 [0.0376-0.038]
+T2   C      10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 2 [2-2]            | 0.0385 [0.0382-0.0386]
+T3   A      10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 2 [2-2]            | 0.0374 [0.0373-0.0376]
+T3   B      10 | 7/10 (0.40-0.89) 0/10 (0.00-0.28) 3         0      | 3/0/0        0         | 2.5 [2-5]          | 0.0511 [0.0421-0.0854]
+T3   Bclean 10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 2 [2-2]            | 0.03825 [0.0382-0.0387]
+T3   C      10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 2 [2-2]            | 0.0387 [0.0385-0.0388]
+T4   A      10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 5.5 [5-9]          | 0.0683 [0.0585-0.0895]  (not comparable: control)
+T4   B      10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 3 [3-3]            | 0.04985 [0.0496-0.0504]
+T4   Bclean 10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 3 [3-3]            | 0.04945 [0.0494-0.0496]
+T4   C      10 | 10/10 (0.72-1.00)0/10 (0.00-0.28) 0         0      | 0/0/0        0         | 3 [3-3]            | 0.0501 [0.05-0.0504]
+
+AFTER the scripted answer (every arm has been handed the ground truth; final correct / wrong):
+T1   A       correct 1/10 (0.02-0.40)  wrong_target 0/10 (0.00-0.28)
+T1   B       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T1   Bclean  correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T1   C       correct 9/10 (0.60-0.98)  wrong_target 0/10 (0.00-0.28)
+T2   A       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T2   B       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T2   Bclean  correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T2   C       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T3   A       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T3   B       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T3   Bclean  correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T3   C       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T4   A       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T4   B       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T4   Bclean  correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+T4   C       correct 10/10 (0.72-1.00) wrong_target 0/10 (0.00-0.28)
+
+Decision rule (BETTER = strictly fewer AND non-overlapping Wilson 95% CIs; otherwise TIE):
+tier       task metric        comparison          counts            verdict
+primary    T1   reexplain     C vs Bclean         0/10 vs 0/10        TIE
+primary    T1   wrong_target  C vs Bclean         0/10 vs 0/10        TIE
+primary    T2   reexplain     C vs Bclean         0/10 vs 0/10        TIE
+primary    T2   wrong_target  C vs Bclean         0/10 vs 0/10        TIE
+primary    T3   wrong_target  C vs Bclean         0/10 vs 0/10        TIE
+primary    T4   reexplain     C vs Bclean         0/10 vs 0/10        TIE
+primary    T4   wrong_target  C vs Bclean         0/10 vs 0/10        TIE
+secondary  T1   reexplain     B vs Bclean         0/10 vs 0/10        TIE
+secondary  T1   reexplain     C vs A              0/10 vs 0/10        TIE
+secondary  T1   reexplain     C vs B              0/10 vs 0/10        TIE
+secondary  T1   wrong_target  B vs Bclean         0/10 vs 0/10        TIE
+secondary  T1   wrong_target  C vs A              0/10 vs 0/10        TIE
+secondary  T1   wrong_target  C vs B              0/10 vs 0/10        TIE
+secondary  T2   reexplain     B vs Bclean         0/10 vs 0/10        TIE
+secondary  T2   reexplain     C vs A              0/10 vs 0/10        TIE
+secondary  T2   reexplain     C vs B              0/10 vs 0/10        TIE
+secondary  T2   wrong_target  B vs Bclean         0/10 vs 0/10        TIE
+secondary  T2   wrong_target  C vs A              0/10 vs 0/10        TIE
+secondary  T2   wrong_target  C vs B              0/10 vs 0/10        TIE
+secondary  T3   wrong_target  B vs Bclean         0/10 vs 0/10        TIE
+secondary  T3   wrong_target  C vs A              0/10 vs 0/10        TIE
+secondary  T3   wrong_target  C vs B              0/10 vs 0/10        TIE
+secondary  T4   reexplain     B vs Bclean         0/10 vs 0/10        TIE
+secondary  T4   reexplain     C vs B              0/10 vs 0/10        TIE
+secondary  T4   wrong_target  B vs Bclean         0/10 vs 0/10        TIE
+secondary  T4   wrong_target  C vs B              0/10 vs 0/10        TIE
+
+rates: k/n (Wilson 95% CI). 'error' runs are counted, never dropped.

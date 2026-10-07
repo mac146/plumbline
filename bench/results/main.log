@@ -1,0 +1,200 @@
+[1/160] Bclean T1#0: correct turns=7 spent=$0.09
+[2/160] A T4#0: correct turns=6 spent=$0.17
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-1eb9rqj3\repo\.claude\settings.json
+[3/160] C T1#0: correct turns=6 spent=$0.25
+[4/160] A T1#0: no_action (asked other) turns=4 spent=$0.40
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-bd1y3ern\repo\.claude\settings.json
+[5/160] C T4#0: correct turns=3 spent=$0.45
+[6/160] A T3#0: correct turns=2 spent=$0.48
+[7/160] Bclean T2#0: correct turns=2 spent=$0.52
+[8/160] Bclean T3#0: correct turns=2 spent=$0.56
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-i4lsdjcx\repo\.claude\settings.json
+[9/160] C T3#0: correct turns=2 spent=$0.60
+[10/160] B T3#0: correct turns=2 spent=$0.65
+[11/160] A T2#0: correct turns=5 spent=$0.71
+[12/160] B T1#0: correct turns=8 spent=$0.82
+[13/160] B T2#0: correct turns=4 spent=$0.88
+[14/160] Bclean T4#0: correct turns=3 spent=$0.93
+[15/160] B T4#0: correct turns=3 spent=$0.98
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-m1_111m8\repo\.claude\settings.json
+[16/160] C T2#0: correct turns=2 spent=$1.02
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-4vj29koo\repo\.claude\settings.json
+[17/160] C T4#1: correct turns=3 spent=$1.07
+[18/160] A T2#1: correct turns=5 spent=$1.13
+[19/160] B T4#1: correct turns=3 spent=$1.18
+[20/160] Bclean T2#1: correct turns=2 spent=$1.21
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-tg21fcsl\repo\.claude\settings.json
+[21/160] C T2#1: correct turns=2 spent=$1.25
+[22/160] B T2#1: correct turns=4 spent=$1.31
+[23/160] Bclean T4#1: correct turns=3 spent=$1.36
+[24/160] A T4#1: correct turns=5 spent=$1.42
+[25/160] B T3#1: correct turns=2 spent=$1.46
+[26/160] Bclean T1#1: correct turns=6 spent=$1.54
+[27/160] A T3#1: correct turns=2 spent=$1.58
+[28/160] B T1#1: correct turns=9 spent=$1.70
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-cvki2_4o\repo\.claude\settings.json
+[29/160] C T3#1: correct turns=2 spent=$1.74
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-wgoqs61e\repo\.claude\settings.json
+[30/160] C T1#1: error turns=16 spent=$1.93
+[31/160] Bclean T3#1: correct turns=2 spent=$1.97
+[32/160] A T1#1: no_action (asked other) turns=5 spent=$2.11
+[33/160] B T1#2: correct turns=7 spent=$2.21
+[34/160] Bclean T1#2: correct turns=6 spent=$2.30
+[35/160] Bclean T3#2: correct turns=2 spent=$2.34
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-8j13q1jz\repo\.claude\settings.json
+[36/160] C T3#2: correct turns=2 spent=$2.38
+[37/160] Bclean T2#2: correct turns=2 spent=$2.42
+[38/160] A T4#2: correct turns=5 spent=$2.47
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-_27m5475\repo\.claude\settings.json
+[39/160] C T4#2: correct turns=3 spent=$2.52
+[40/160] B T4#2: correct turns=3 spent=$2.57
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-t8o_xl_s\repo\.claude\settings.json
+[41/160] C T1#2: correct turns=15 spent=$2.75
+[42/160] Bclean T4#2: correct turns=3 spent=$2.80
+[43/160] A T3#2: correct turns=2 spent=$2.84
+[44/160] A T2#2: correct turns=3 spent=$2.91
+[45/160] B T2#2: correct turns=4 spent=$2.97
+[46/160] B T3#2: correct turns=2 spent=$3.01
+[47/160] A T1#2: no_action (asked other) turns=3 spent=$3.16
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-edx0s_vg\repo\.claude\settings.json
+[48/160] C T2#2: correct turns=2 spent=$3.20
+[49/160] Bclean T4#3: correct turns=3 spent=$3.25
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-l2pev0av\repo\.claude\settings.json
+[50/160] C T3#3: correct turns=2 spent=$3.29
+[51/160] Bclean T1#3: correct turns=9 spent=$3.39
+[52/160] Bclean T2#3: correct turns=2 spent=$3.42
+[53/160] B T4#3: correct turns=3 spent=$3.47
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-awego5es\repo\.claude\settings.json
+[54/160] C T1#3: correct turns=6 spent=$3.54
+[55/160] B T3#3: correct turns=2 spent=$3.59
+[56/160] A T3#3: correct turns=2 spent=$3.63
+[57/160] A T4#3: correct turns=6 spent=$3.71
+[58/160] B T2#3: correct turns=4 spent=$3.76
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-78or51ri\repo\.claude\settings.json
+[59/160] C T4#3: correct turns=3 spent=$3.81
+[60/160] A T2#3: correct turns=5 spent=$3.87
+[61/160] Bclean T3#3: correct turns=2 spent=$3.91
+[62/160] B T1#3: correct turns=9 spent=$4.03
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-y_d7rsgk\repo\.claude\settings.json
+[63/160] C T2#3: correct turns=2 spent=$4.06
+[64/160] A T1#3: no_action (asked target) turns=8 spent=$4.28
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-3r9asnf_\repo\.claude\settings.json
+[65/160] C T2#4: correct turns=2 spent=$4.31
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-4hykfkio\repo\.claude\settings.json
+[66/160] C T3#4: correct turns=2 spent=$4.35
+[67/160] A T4#4: correct turns=7 spent=$4.43
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-192mv8kb\repo\.claude\settings.json
+[68/160] C T4#4: correct turns=3 spent=$4.48
+[69/160] B T3#4: correct (asked target) turns=4 spent=$4.55
+[70/160] Bclean T4#4: correct turns=3 spent=$4.60
+[71/160] A T1#4: no_action turns=4 spent=$4.70
+[72/160] B T2#4: correct turns=4 spent=$4.75
+[73/160] B T1#4: correct turns=6 spent=$4.84
+[74/160] Bclean T1#4: correct turns=4 spent=$4.90
+[75/160] Bclean T3#4: correct turns=2 spent=$4.94
+[76/160] Bclean T2#4: correct turns=2 spent=$4.98
+[77/160] B T4#4: correct turns=3 spent=$5.03
+[78/160] A T3#4: correct turns=2 spent=$5.07
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-5v_6utwy\repo\.claude\settings.json
+[79/160] C T1#4: correct turns=6 spent=$5.13
+[80/160] A T2#4: correct turns=6 spent=$5.20
+[81/160] B T1#5: correct turns=8 spent=$5.29
+[82/160] Bclean T1#5: correct turns=6 spent=$5.38
+[83/160] B T3#5: correct (asked target) turns=5 spent=$5.46
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-qarfexxz\repo\.claude\settings.json
+[84/160] C T4#5: correct turns=3 spent=$5.51
+[85/160] A T1#5: no_action (asked target) turns=12 spent=$5.76
+[86/160] Bclean T2#5: correct turns=2 spent=$5.80
+[87/160] A T3#5: correct turns=2 spent=$5.84
+[88/160] A T2#5: correct turns=5 spent=$5.90
+[89/160] A T4#5: correct turns=6 spent=$5.98
+[90/160] Bclean T3#5: correct turns=2 spent=$6.01
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-e9gnisan\repo\.claude\settings.json
+[91/160] C T2#5: correct turns=2 spent=$6.05
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-pm4xu3r2\repo\.claude\settings.json
+[92/160] C T1#5: correct turns=4 spent=$6.12
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-r2k_am5u\repo\.claude\settings.json
+[93/160] C T3#5: correct turns=2 spent=$6.15
+[94/160] Bclean T4#5: correct turns=3 spent=$6.20
+[95/160] B T2#5: correct turns=4 spent=$6.26
+[96/160] B T4#5: correct turns=3 spent=$6.31
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-wmjeg9jy\repo\.claude\settings.json
+[97/160] C T3#6: correct turns=2 spent=$6.35
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-sfpp4vzp\repo\.claude\settings.json
+[98/160] C T4#6: correct turns=3 spent=$6.40
+[99/160] B T4#6: correct turns=3 spent=$6.45
+[100/160] Bclean T4#6: correct turns=3 spent=$6.50
+[101/160] Bclean T3#6: correct turns=2 spent=$6.54
+[102/160] Bclean T2#6: correct turns=2 spent=$6.58
+[103/160] Bclean T1#6: correct turns=5 spent=$6.65
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-p3a50rj9\repo\.claude\settings.json
+[104/160] C T1#6: correct turns=4 spent=$6.71
+[105/160] A T4#6: correct turns=5 spent=$6.77
+[106/160] B T3#6: correct turns=4 spent=$6.84
+[107/160] A T1#6: no_action turns=2 spent=$6.95
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-zhjwkloq\repo\.claude\settings.json
+[108/160] C T2#6: correct turns=2 spent=$6.99
+[109/160] B T1#6: correct turns=9 spent=$7.10
+[110/160] A T3#6: correct turns=2 spent=$7.13
+[111/160] B T2#6: correct turns=4 spent=$7.19
+[112/160] A T2#6: correct turns=5 spent=$7.25
+[113/160] Bclean T4#7: correct turns=3 spent=$7.30
+[114/160] B T4#7: correct turns=3 spent=$7.35
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-7ku5pob7\repo\.claude\settings.json
+[115/160] C T4#7: correct turns=3 spent=$7.40
+[116/160] B T3#7: correct (asked target) turns=3 spent=$7.46
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-2z5kv469\repo\.claude\settings.json
+[117/160] C T2#7: correct turns=2 spent=$7.49
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-7q55jhwx\repo\.claude\settings.json
+[118/160] C T1#7: correct turns=6 spent=$7.58
+[119/160] Bclean T2#7: correct turns=2 spent=$7.62
+[120/160] B T2#7: correct turns=4 spent=$7.68
+[121/160] A T3#7: correct turns=2 spent=$7.71
+[122/160] A T4#7: correct turns=5 spent=$7.77
+[123/160] Bclean T3#7: correct turns=2 spent=$7.81
+[124/160] Bclean T1#7: correct turns=6 spent=$7.89
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-7jm7fj6f\repo\.claude\settings.json
+[125/160] C T3#7: correct turns=2 spent=$7.93
+[126/160] A T1#7: no_action turns=2 spent=$8.03
+[127/160] B T1#7: correct turns=6 spent=$8.12
+[128/160] A T2#7: correct turns=7 spent=$8.20
+[129/160] A T4#8: correct turns=9 spent=$8.29
+[130/160] B T4#8: correct turns=3 spent=$8.34
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-6xp5xtpm\repo\.claude\settings.json
+[131/160] C T2#8: correct turns=2 spent=$8.38
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-_z9rzuxs\repo\.claude\settings.json
+[132/160] C T1#8: correct turns=5 spent=$8.45
+[133/160] B T2#8: correct turns=4 spent=$8.51
+[134/160] Bclean T3#8: correct turns=2 spent=$8.55
+[135/160] B T1#8: correct turns=9 spent=$8.64
+[136/160] A T2#8: correct turns=5 spent=$8.70
+[137/160] A T3#8: correct turns=2 spent=$8.74
+[138/160] Bclean T4#8: correct turns=3 spent=$8.79
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-qda9e54t\repo\.claude\settings.json
+[139/160] C T3#8: correct turns=2 spent=$8.83
+[140/160] A T1#8: no_action (asked other) turns=3 spent=$8.99
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-6n60hfrk\repo\.claude\settings.json
+[141/160] C T4#8: correct turns=3 spent=$9.04
+[142/160] Bclean T2#8: correct turns=2 spent=$9.07
+[143/160] Bclean T1#8: correct turns=8 spent=$9.16
+[144/160] B T3#8: correct turns=2 spent=$9.20
+[145/160] A T2#9: correct turns=5 spent=$9.26
+[146/160] B T2#9: correct turns=4 spent=$9.32
+[147/160] B T1#9: correct turns=9 spent=$9.42
+[148/160] A T4#9: correct turns=5 spent=$9.48
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-k68vd7fx\repo\.claude\settings.json
+[149/160] C T4#9: correct turns=3 spent=$9.53
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-pyu6wqzk\repo\.claude\settings.json
+[150/160] C T2#9: correct turns=2 spent=$9.57
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-jk8xc1ug\repo\.claude\settings.json
+[151/160] C T3#9: correct turns=2 spent=$9.61
+[152/160] A T3#9: correct turns=2 spent=$9.64
+[153/160] A T1#9: correct (asked target) turns=16 spent=$9.91
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-o3pe2rrj\repo\.claude\settings.json
+[154/160] C T1#9: correct turns=4 spent=$9.97
+[155/160] Bclean T3#9: correct turns=2 spent=$10.01
+[156/160] Bclean T1#9: correct turns=6 spent=$10.09
+[157/160] B T4#9: correct turns=3 spent=$10.14
+[158/160] B T3#9: correct turns=3 spent=$10.20
+[159/160] Bclean T2#9: correct turns=2 spent=$10.23
+[160/160] Bclean T4#9: correct turns=3 spent=$10.28
