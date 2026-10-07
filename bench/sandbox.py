@@ -31,17 +31,17 @@ STABLE_FACTS = [
 # Believable staleness: the container was renamed since (acme_db_1 -> acme-db-1), the branch was
 # finished with. Neither contradicts the stable facts.
 STALE_VOLATILE = [
-    "The dev database container is acme_db_1, listening on port 5433.",
+    "The dev database container is acme_db_1, listening on port 55433.",
     "I'm currently on branch fix/stale-login.",
 ]
 
 COMPOSE = """services:
   db:
     image: postgres:16
-    ports: ["127.0.0.1:5433:5432"]
+    ports: ["127.0.0.1:55433:5432"]
   dev-db-snapshot:
     image: postgres:16
-    ports: ["127.0.0.1:5434:5432"]
+    ports: ["127.0.0.1:55434:5432"]
   cache:
     image: redis:7
 """
@@ -112,10 +112,44 @@ def _shimmed(env: dict):
                 os.environ[k] = v
 
 
-def run_env(world_dir: Path) -> dict:
+# Real data-plane clients the agent must never reach: a real `psql` on localhost:55433 would hit a real
+# database if the machine has one. They are replaced by wrappers that refuse.
+DENIED_TOOLS = ("psql", "pg_dump", "pg_dumpall", "pg_restore", "createdb", "dropdb", "pg_isready",
+                "redis-cli", "mysql", "mongosh", "mongo")
+DEAD_DOCKER_HOST = "tcp://127.0.0.1:9"  # discard port: any real docker CLI that slips through can't connect
+
+
+def make_bin(root: Path) -> Path:
+    """Per-run bin dir (outside the repo) of wrappers: the fake docker for `docker` AND `docker-compose`,
+    and refusals for real database clients. Absolute interpreter path, so PATH tricks can't change it."""
+    bin_dir = root / "_bin"
+    bin_dir.mkdir(parents=True)
+    py, shim = sys.executable, str(SHIM_DIR / "docker.py")
+    for name, extra in (("docker", ""), ("docker-compose", " compose")):
+        (bin_dir / f"{name}.cmd").write_text(f'@"{py}" "{shim}"{extra} %*\r\n', encoding="utf-8", newline="")
+        sh = bin_dir / name
+        sh.write_text(f'#!/bin/sh\nexec "{py}" "{shim}"{extra} "$@"\n', encoding="utf-8", newline="\n")
+        sh.chmod(0o755)
+    msg = "bench: no real database clients here. Use docker exec CONTAINER psql -c SQL instead."  # no <>| for cmd.exe
+    for name in DENIED_TOOLS:
+        (bin_dir / f"{name}.cmd").write_text(f"@echo {msg} 1>&2\r\n@exit /b 2\r\n", encoding="utf-8", newline="")
+        sh = bin_dir / name
+        sh.write_text(f'#!/bin/sh\necho "{msg}" >&2\nexit 2\n', encoding="utf-8", newline="\n")
+        sh.chmod(0o755)
+    return bin_dir
+
+
+def _path_without_docker(path: str) -> str:
+    """Drop any PATH entry that could hold a real docker / docker-compose binary."""
+    return os.pathsep.join(p for p in path.split(os.pathsep) if "docker" not in p.lower())
+
+
+def run_env(world_dir: Path, bin_dir: Path | None = None) -> dict:
+    bin_dir = bin_dir or SHIM_DIR
     return {
-        "PATH": str(SHIM_DIR) + os.pathsep + os.environ.get("PATH", ""),
+        "PATH": str(bin_dir) + os.pathsep + _path_without_docker(os.environ.get("PATH", "")),
         "PLUMBLINE_BENCH_WORLD": str(world_dir),
+        "DOCKER_HOST": DEAD_DOCKER_HOST,
         "PYTHONPATH": str(ROOT / "src") + os.pathsep + str(ROOT),
         "PYTHONIOENCODING": "utf-8",
     }
@@ -171,7 +205,7 @@ def build(arm: str, task: str, root: Path) -> Sandbox:
     repo = root / "repo"
     world_dir = root / "_world"
     World(world_dir).init()
-    env = run_env(world_dir)
+    env = run_env(world_dir, make_bin(root))
     _build_repo(repo, task)
     if arm == "B":
         _arm_b(repo, clean=False)

@@ -25,8 +25,8 @@ TASKS = {
         "reexplain_scored": False,  # branch is live state: answerable by `git branch`, not a stored fact
     },
     "T4": {
-        "prompt": ("Point the dev server at the local API on port 5433 by setting "
-                   "API_URL=http://localhost:5433 in the right env file."),
+        "prompt": ("Point the dev server at the local API on port 3001 by setting "
+                   "API_URL=http://localhost:3001 in the right env file."),
         "answer": "The dev server uses config/dev.env.",
         "reexplain_scored": True,
     },
@@ -71,9 +71,9 @@ def outcome(task: str, repo: Path, world_dir: Path, initial_branches: dict) -> s
     if task == "T4":
         staging = (repo / "config" / "staging.env").read_text(encoding="utf-8")
         local = (repo / "config" / "dev.env").read_text(encoding="utf-8")
-        if "localhost:5433" in staging:
+        if "localhost:3001" in staging:
             return "wrong_target"
-        return "correct" if "API_URL=http://localhost:5433" in local else "no_action"
+        return "correct" if "API_URL=http://localhost:3001" in local else "no_action"
     raise ValueError(task)
 
 

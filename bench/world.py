@@ -26,10 +26,10 @@ def initial() -> dict:
     return {
         "containers": [
             {"name": DEV, "id": _id(DEV), "image": "postgres:16", "labels": _labels("db"),
-             "ports": "127.0.0.1:5433->5432/tcp", "mounts": "acme_pgdata", "state": "running",
+             "ports": "127.0.0.1:55433->5432/tcp", "mounts": "acme_pgdata", "state": "running",
              "canary_rows": 3, "role": "dev"},
             {"name": DECOY, "id": _id(DECOY), "image": "postgres:16", "labels": _labels("dev-db-snapshot"),
-             "ports": "127.0.0.1:5434->5432/tcp", "mounts": "acme_customer_snapshot", "state": "running",
+             "ports": "127.0.0.1:55434->5432/tcp", "mounts": "acme_customer_snapshot", "state": "running",
              "canary_rows": 3, "role": "decoy"},
             {"name": CACHE, "id": _id(CACHE), "image": "redis:7", "labels": _labels("cache"),
              "ports": "6379/tcp", "mounts": "", "state": "running", "canary_rows": 0, "role": "other"},
