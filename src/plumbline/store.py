@@ -82,5 +82,5 @@ class Workspace:
 
     def config(self) -> dict:
         defaults = {"env_vars": ["APP_ENV", "NODE_ENV", "ENVIRONMENT"], "semi_stable_ttl_days": 30,
-                    "stale_caution": False}  # opt-in: annotate remembered facts that name a drifted service
+                    "quarantine": True}  # hide remembered facts that name a drifted service or missing files
         return {**defaults, **self.read_json("config.json", {})}

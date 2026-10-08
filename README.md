@@ -157,3 +157,23 @@ Costs real API usage (about $0.04-0.11 per run in the smoke test); every claude 
 ## Tests
 
 `python -m unittest discover -s tests -t .`
+
+## Fixes after the twins test (v6 design, not yet benchmarked)
+
+The Haiku twins run (80 runs, 5 per cell) showed the drift flag alone did not stop wrong actions: Plumbline
+acted on the wrong container in 10/10 drifted runs, because the stale fact still sat under "safe to rely on".
+Changes, all unit-tested, **none re-measured against agents yet**:
+
+- **Quarantine:** remembered facts that name a drifted service, or reference files that no longer exist,
+  move to a "QUARANTINED: do not act on these" section (config `quarantine`, default on). Replaces the old
+  opt-in annotation (arm C2), which only had 1 of 5 runs wrong on T1 but 5 of 5 on T5.
+- **Drift guard:** the PreToolUse hook blocks destructive docker actions (exec with write SQL, restart, stop,
+  rm, kill, down) against any container the glossary reports as drifted or ambiguous.
+- **Humans resolve flags:** the guard blocks the agent from running `glossary add|confirm|remove` and
+  `flags snooze|ignore`.
+- **File-path staleness:** conservative check (a path is broken only if no tracked file shares its basename);
+  addresses the E3 finding that the gate never saw code-structure staleness.
+
+Still open: the gate leaks unseen volatile phrasings; `--why` from an agent defeats default-deny; the shell
+guard is bypassable (signatures are the backstop); the bench pins (`prereg-v5`) no longer verify because the
+Plumbline source changed, so any scored re-run needs a new freeze (v6).

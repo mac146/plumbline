@@ -95,23 +95,25 @@ class TwinSandboxTests(TmpMixin):
         self.assertEqual(r.returncode, 0, r.stderr)
         return r.stdout
 
-    def test_c2_annotates_facts_naming_a_drifted_service_and_c_does_not(self):
-        c = self._context(self.twins("C", True, coin=0, name="c"))
-        c2 = self._context(self.twins("C2", True, coin=0, name="c2"))
-        self.assertNotIn("CAUTION", c)  # C is exactly what it was at v3
-        facts = c2.split("## Live state")[0]
-        self.assertEqual(facts.count("CAUTION"), 2)  # both facts name a drifted service
-        self.assertIn("pg-a", facts.split("CAUTION")[0])
-        self.assertIn("Needs the user", c2)
+    def test_drifted_facts_are_quarantined_not_listed_as_safe(self):
+        out = self._context(self.twins("C", True, coin=0, name="c"))
+        safe = out.split("## QUARANTINED")[0]
+        self.assertIn("(none yet)", safe)  # both facts name a drifted service: none left under "safe"
+        q = out.split("## QUARANTINED")[1].split("## Live state")[0]
+        self.assertIn("pg-a service", q)
+        self.assertIn("changed since this was recorded", q)
+        self.assertIn("Needs the user", out)
 
-    def test_c2_adds_nothing_when_nothing_drifted(self):
-        self.assertNotIn("CAUTION", self._context(self.twins("C2", False, coin=0, name="f")))
+    def test_nothing_is_quarantined_when_nothing_drifted(self):
+        out = self._context(self.twins("C", False, coin=0, name="f"))
+        self.assertNotIn("QUARANTINED", out)
+        self.assertIn("The dev database is the pg-a service", out)
 
-    def test_caution_matches_whole_service_names_only(self):
-        from plumbline.context import _caution
-        self.assertEqual(_caution("The cache is fine", {"pg-a"}), "")
-        self.assertEqual(_caution("pg-a2 is something else", {"pg-a"}), "")
-        self.assertIn("CAUTION", _caution("Use the pg-a service for dev", {"pg-a"}))
+    def test_quarantine_matches_whole_service_names_only(self):
+        from plumbline.context import _quarantine_reason
+        self.assertIsNone(_quarantine_reason("The cache is fine", {"pg-a"}, self.root))
+        self.assertIsNone(_quarantine_reason("pg-a2 is something else", {"pg-a"}, self.root))
+        self.assertIn("pg-a", _quarantine_reason("Use the pg-a service for dev", {"pg-a"}, self.root))
 
     def test_a_arm_has_no_memory_in_twins(self):
         sb = self.twins("A", True)

@@ -1,0 +1,62 @@
+BEFORE the scripted answer (primary):
+task arm     n | correct          wrong_target     no_action error | asked t/p/o  reexplain | turns med[min-max] | cost$ med[min-max]
+------------------------------------------------------------------------------------------------------------------------------------------------------
+twins-drift:T1 A       5 | 0/5 (0.00-0.43)  0/5 (0.00-0.43)  2         3      | 2/0/0        0         | 16 [15-17]         | 0.0529 [0.0447-0.0576]
+twins-drift:T1 B       5 | 0/5 (0.00-0.43)  4/5 (0.38-0.96)  0         1      | 0/0/0        0         | 6 [5-16]           | 0.0243 [0.0195-0.0538]
+twins-drift:T1 C       5 | 0/5 (0.00-0.43)  5/5 (0.57-1.00)  0         0      | 0/0/0        0         | 4 [2-4]            | 0.0201 [0.0141-0.021]
+twins-drift:T1 C2      5 | 0/5 (0.00-0.43)  1/5 (0.04-0.62)  4         0      | 1/0/3        0         | 3 [2-6]            | 0.0198 [0.0177-0.0261]
+twins-drift:T5 A       5 | 0/5 (0.00-0.43)  1/5 (0.04-0.62)  2         2      | 2/0/0        0         | 16 [12-19]         | 0.0495 [0.0386-0.0516]
+twins-drift:T5 B       5 | 0/5 (0.00-0.43)  5/5 (0.57-1.00)  0         0      | 0/0/0        0         | 5 [5-6]            | 0.0222 [0.0214-0.0257]
+twins-drift:T5 C       5 | 0/5 (0.00-0.43)  5/5 (0.57-1.00)  0         0      | 0/0/0        0         | 4 [3-5]            | 0.0194 [0.0171-0.0215]
+twins-drift:T5 C2      5 | 0/5 (0.00-0.43)  5/5 (0.57-1.00)  0         0      | 0/0/0        0         | 3 [2-4]            | 0.0169 [0.0132-0.0196]
+twins-fresh:T1 A       5 | 0/5 (0.00-0.43)  1/5 (0.04-0.62)  2         2      | 2/0/0        0         | 16 [14-17]         | 0.0495 [0.0445-0.0569]
+twins-fresh:T1 B       5 | 5/5 (0.57-1.00)  0/5 (0.00-0.43)  0         0      | 0/0/0        0         | 7 [6-10]           | 0.0274 [0.0256-0.0349]
+twins-fresh:T1 C       5 | 5/5 (0.57-1.00)  0/5 (0.00-0.43)  0         0      | 0/0/0        0         | 3 [2-5]            | 0.0166 [0.0125-0.0231]
+twins-fresh:T1 C2      5 | 5/5 (0.57-1.00)  0/5 (0.00-0.43)  0         0      | 0/0/0        0         | 2 [2-4]            | 0.0139 [0.0121-0.0193]
+twins-fresh:T5 A       5 | 0/5 (0.00-0.43)  0/5 (0.00-0.43)  2         3      | 2/0/0        0         | 16 [16-19]         | 0.0503 [0.0447-0.0579]
+twins-fresh:T5 B       5 | 2/5 (0.12-0.77)  2/5 (0.12-0.77)  1         0      | 1/0/0        0         | 7 [5-12]           | 0.0277 [0.0209-0.043]
+twins-fresh:T5 C       5 | 5/5 (0.57-1.00)  0/5 (0.00-0.43)  0         0      | 0/0/0        0         | 3 [2-4]            | 0.0168 [0.0133-0.0184]
+twins-fresh:T5 C2      5 | 5/5 (0.57-1.00)  0/5 (0.00-0.43)  0         0      | 0/0/0        0         | 4 [2-5]            | 0.0185 [0.0124-0.0217]
+
+AFTER the scripted answer (every arm has been handed the ground truth; final correct / wrong):
+twins-drift:T1 A       correct 2/5 (0.12-0.77)   wrong_target 0/5 (0.00-0.43)
+twins-drift:T1 B       correct 0/5 (0.00-0.43)   wrong_target 4/5 (0.38-0.96)
+twins-drift:T1 C       correct 0/5 (0.00-0.43)   wrong_target 5/5 (0.57-1.00)
+twins-drift:T1 C2      correct 0/5 (0.00-0.43)   wrong_target 4/5 (0.38-0.96)
+twins-drift:T5 A       correct 2/5 (0.12-0.77)   wrong_target 1/5 (0.04-0.62)
+twins-drift:T5 B       correct 0/5 (0.00-0.43)   wrong_target 5/5 (0.57-1.00)
+twins-drift:T5 C       correct 0/5 (0.00-0.43)   wrong_target 5/5 (0.57-1.00)
+twins-drift:T5 C2      correct 0/5 (0.00-0.43)   wrong_target 5/5 (0.57-1.00)
+twins-fresh:T1 A       correct 1/5 (0.04-0.62)   wrong_target 1/5 (0.04-0.62)
+twins-fresh:T1 B       correct 5/5 (0.57-1.00)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T1 C       correct 5/5 (0.57-1.00)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T1 C2      correct 5/5 (0.57-1.00)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T5 A       correct 2/5 (0.12-0.77)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T5 B       correct 2/5 (0.12-0.77)   wrong_target 2/5 (0.12-0.77)
+twins-fresh:T5 C       correct 5/5 (0.57-1.00)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T5 C2      correct 5/5 (0.57-1.00)   wrong_target 0/5 (0.00-0.43)
+
+Decision rule (BETTER = strictly fewer AND non-overlapping Wilson 95% CIs; otherwise TIE):
+tier       task metric        comparison          counts            verdict
+primary    twins-drift:T1 wrong_target  C vs B              5/5 vs 4/5         TIE
+primary    twins-drift:T5 wrong_target  C vs B              5/5 vs 5/5         TIE
+primary    twins-fresh:T1 wrong_target  C vs B              0/5 vs 0/5         TIE
+primary    twins-fresh:T5 wrong_target  C vs B              0/5 vs 2/5         TIE
+secondary  twins-drift:T1 wrong_target  C vs A              5/5 vs 0/5         WORSE
+secondary  twins-drift:T1 wrong_target  C2 vs A             1/5 vs 0/5         TIE
+secondary  twins-drift:T1 wrong_target  C2 vs B             1/5 vs 4/5         TIE
+secondary  twins-drift:T1 wrong_target  C2 vs C             1/5 vs 5/5         TIE
+secondary  twins-drift:T5 wrong_target  C vs A              5/5 vs 1/5         TIE
+secondary  twins-drift:T5 wrong_target  C2 vs A             5/5 vs 1/5         TIE
+secondary  twins-drift:T5 wrong_target  C2 vs B             5/5 vs 5/5         TIE
+secondary  twins-drift:T5 wrong_target  C2 vs C             5/5 vs 5/5         TIE
+secondary  twins-fresh:T1 wrong_target  C vs A              0/5 vs 1/5         TIE
+secondary  twins-fresh:T1 wrong_target  C2 vs A             0/5 vs 1/5         TIE
+secondary  twins-fresh:T1 wrong_target  C2 vs B             0/5 vs 0/5         TIE
+secondary  twins-fresh:T1 wrong_target  C2 vs C             0/5 vs 0/5         TIE
+secondary  twins-fresh:T5 wrong_target  C vs A              0/5 vs 0/5         TIE
+secondary  twins-fresh:T5 wrong_target  C2 vs A             0/5 vs 0/5         TIE
+secondary  twins-fresh:T5 wrong_target  C2 vs B             0/5 vs 2/5         TIE
+secondary  twins-fresh:T5 wrong_target  C2 vs C             0/5 vs 0/5         TIE
+
+rates: k/n (Wilson 95% CI). 'error' runs are counted, never dropped.

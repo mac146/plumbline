@@ -1,0 +1,120 @@
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-oyrev1xo\repo\.claude\settings.json
+[1/160] twins-fresh C T1#0: correct turns=2 spent=$0.01
+[2/80] twins-drift A T5#0: error turns=16 spent=$0.05
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-94pfi6at\repo\.claude\settings.json
+[3/80] twins-fresh C2 T1#0: correct turns=3 spent=$0.07
+[4/80] twins-fresh A T1#0: correct (asked target) turns=17 spent=$0.12
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-dbdob6mj\repo\.claude\settings.json
+[5/80] twins-drift C2 T5#0: wrong_target turns=4 spent=$0.14
+[6/80] twins-drift A T1#0: error turns=16 spent=$0.19
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-skzscmyz\repo\.claude\settings.json
+[7/80] twins-fresh C T5#0: correct turns=3 spent=$0.21
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-j5r4noci\repo\.claude\settings.json
+[8/80] twins-drift C T1#0: wrong_target turns=4 spent=$0.23
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-lq2wimn4\repo\.claude\settings.json
+[9/80] twins-drift C2 T1#0: wrong_target (asked other) turns=6 spent=$0.25
+[10/80] twins-drift B T1#0: error turns=16 spent=$0.31
+[11/80] twins-fresh A T5#0: error turns=16 spent=$0.36
+[12/80] twins-fresh B T1#0: correct turns=7 spent=$0.38
+[13/80] twins-fresh B T5#0: correct turns=5 spent=$0.40
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-a5skltvy\repo\.claude\settings.json
+[14/80] twins-drift C T5#0: wrong_target turns=4 spent=$0.42
+[15/80] twins-drift B T5#0: wrong_target turns=5 spent=$0.45
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-mox5lrem\repo\.claude\settings.json
+[16/80] twins-fresh C2 T5#0: correct turns=3 spent=$0.46
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-n8ywmore\repo\.claude\settings.json
+[17/80] twins-drift C2 T5#1: wrong_target turns=4 spent=$0.48
+[18/80] twins-fresh A T5#1: error turns=16 spent=$0.54
+[19/80] twins-drift B T5#1: wrong_target turns=6 spent=$0.57
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-40drl79d\repo\.claude\settings.json
+[20/80] twins-fresh C T5#1: correct turns=4 spent=$0.58
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-s2kxredo\repo\.claude\settings.json
+[21/80] twins-fresh C2 T5#1: correct turns=5 spent=$0.61
+[22/80] twins-fresh B T5#1: wrong_target turns=9 spent=$0.64
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-vygs1qri\repo\.claude\settings.json
+[23/80] twins-drift C T5#1: wrong_target turns=4 spent=$0.66
+[24/80] twins-drift A T5#1: correct (asked target) turns=12 spent=$0.70
+[25/80] twins-drift B T1#1: wrong_target turns=5 spent=$0.72
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-6tn4ow6y\repo\.claude\settings.json
+[26/80] twins-fresh C T1#1: correct turns=5 spent=$0.74
+[27/80] twins-drift A T1#1: correct (asked target) turns=17 spent=$0.79
+[28/80] twins-fresh B T1#1: correct turns=6 spent=$0.82
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-b_wz022e\repo\.claude\settings.json
+[29/80] twins-drift C2 T1#1: no_action (asked target) turns=2 spent=$0.84
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-kejkswxc\repo\.claude\settings.json
+[30/80] twins-fresh C2 T1#1: correct turns=2 spent=$0.85
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-zz870sfk\repo\.claude\settings.json
+[31/80] twins-drift C T1#1: wrong_target turns=4 spent=$0.87
+[32/80] twins-fresh A T1#1: wrong_target turns=15 spent=$0.91
+[33/80] twins-fresh B T1#2: correct turns=10 spent=$0.95
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-qx0z5zk5\repo\.claude\settings.json
+[34/80] twins-fresh C T1#2: correct turns=2 spent=$0.96
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-2sfix7s5\repo\.claude\settings.json
+[35/80] twins-drift C T1#2: wrong_target turns=2 spent=$0.98
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-1gemnf8p\repo\.claude\settings.json
+[36/80] twins-drift C2 T1#2: wrong_target (asked other) turns=3 spent=$1.00
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-8vzufhgz\repo\.claude\settings.json
+[37/80] twins-fresh C T5#2: correct turns=3 spent=$1.01
+[38/80] twins-drift A T5#2: error turns=16 spent=$1.06
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-0u8w92u3\repo\.claude\settings.json
+[39/80] twins-drift C2 T5#2: wrong_target turns=2 spent=$1.08
+[40/80] twins-drift B T5#2: wrong_target turns=6 spent=$1.10
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-qbsj9hw_\repo\.claude\settings.json
+[41/80] twins-fresh C2 T1#2: correct turns=4 spent=$1.12
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-daw8nmgt\repo\.claude\settings.json
+[42/80] twins-drift C T5#2: wrong_target turns=5 spent=$1.14
+[43/80] twins-drift A T1#2: correct (asked target) turns=15 spent=$1.19
+[44/80] twins-fresh A T5#2: error turns=16 spent=$1.24
+[45/80] twins-fresh B T5#2: wrong_target turns=12 spent=$1.28
+[46/80] twins-drift B T1#2: wrong_target turns=6 spent=$1.31
+[47/80] twins-fresh A T1#2: error turns=16 spent=$1.36
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-sns6175n\repo\.claude\settings.json
+[48/80] twins-fresh C2 T5#2: correct turns=4 spent=$1.38
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-_v0ed204\repo\.claude\settings.json
+[49/80] twins-drift C T5#3: wrong_target turns=3 spent=$1.40
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-3sysochp\repo\.claude\settings.json
+[50/80] twins-drift C2 T1#3: wrong_target turns=4 spent=$1.42
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-_z2wihj2\repo\.claude\settings.json
+[51/80] twins-fresh C T1#3: correct turns=3 spent=$1.44
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-2_yd0u8v\repo\.claude\settings.json
+[52/80] twins-fresh C T5#3: correct turns=3 spent=$1.46
+[53/80] twins-drift B T5#3: wrong_target turns=5 spent=$1.48
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-xj2upna9\repo\.claude\settings.json
+[54/80] twins-fresh C2 T1#3: correct turns=2 spent=$1.49
+[55/80] twins-drift B T1#3: wrong_target turns=5 spent=$1.51
+[56/80] twins-drift A T1#3: error turns=16 spent=$1.57
+[57/80] twins-drift A T5#3: wrong_target turns=19 spent=$1.62
+[58/80] twins-fresh B T5#3: no_action (asked target) turns=5 spent=$1.64
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-inpvl5qx\repo\.claude\settings.json
+[59/80] twins-drift C2 T5#3: wrong_target turns=3 spent=$1.66
+[60/80] twins-fresh A T5#3: correct (asked target) turns=16 spent=$1.70
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-enutefql\repo\.claude\settings.json
+[61/80] twins-drift C T1#3: wrong_target turns=2 spent=$1.72
+[62/80] twins-fresh B T1#3: correct turns=8 spent=$1.75
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-ty__9tlp\repo\.claude\settings.json
+[63/80] twins-fresh C2 T5#3: correct turns=2 spent=$1.76
+[64/80] twins-fresh A T1#3: error turns=16 spent=$1.81
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-k5vo3ovp\repo\.claude\settings.json
+[65/80] twins-fresh C2 T5#4: correct turns=4 spent=$1.83
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-vs5dxms0\repo\.claude\settings.json
+[66/80] twins-drift C2 T1#4: wrong_target (asked other) turns=3 spent=$1.85
+[67/80] twins-drift A T5#4: correct (asked target) turns=15 spent=$1.89
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-bwkawoha\repo\.claude\settings.json
+[68/80] twins-drift C2 T5#4: wrong_target turns=2 spent=$1.90
+[69/80] twins-drift B T1#4: wrong_target turns=6 spent=$1.93
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-7aj83ih_\repo\.claude\settings.json
+[70/80] twins-drift C T5#4: wrong_target turns=4 spent=$1.95
+[71/80] twins-fresh A T1#4: no_action (asked target) turns=14 spent=$1.99
+[72/80] twins-fresh B T5#4: correct turns=7 spent=$2.02
+[73/80] twins-fresh B T1#4: correct turns=6 spent=$2.04
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-6xitkh8m\repo\.claude\settings.json
+[74/80] twins-fresh C T1#4: correct turns=4 spent=$2.06
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-sswew_r4\repo\.claude\settings.json
+[75/80] twins-drift C T1#4: wrong_target turns=4 spent=$2.08
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-s8y9x1w5\repo\.claude\settings.json
+[76/80] twins-fresh C T5#4: correct turns=2 spent=$2.10
+[77/80] twins-drift B T5#4: wrong_target turns=5 spent=$2.12
+[78/80] twins-drift A T1#4: error turns=16 spent=$2.17
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-j0fvddur\repo\.claude\settings.json
+[79/80] twins-fresh C2 T1#4: correct turns=2 spent=$2.18
+[80/80] twins-fresh A T5#4: correct (asked target) turns=19 spent=$2.24

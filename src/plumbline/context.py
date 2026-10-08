@@ -8,6 +8,7 @@ from datetime import datetime
 from .drift import Ignores, evaluate
 from .glossary import Glossary
 from .memory import Memory
+from .pathcheck import broken_paths
 from .probes import LiveState, snapshot
 from .store import Workspace, utcnow
 
@@ -17,13 +18,15 @@ def _drifted_services(flags) -> set[str]:
     return {f.container.service for f in flags if f.kind == "meaning_changed" and f.container and f.container.service}
 
 
-def _caution(text: str, drifted: set[str]) -> str:
-    """Opt-in (config `stale_caution`): a remembered fact that names a drifted service may no longer be true."""
-    hits = sorted(s for s in drifted if re.search(rf"(?<![\w-]){re.escape(s)}(?![\w-])", text))
-    if not hits:
-        return ""
-    return (f"  [CAUTION: the glossary reports the container for {', '.join(hits)} changed since this was "
-            "recorded; this fact may be stale. Verify with the user before acting on it.]")
+def _quarantine_reason(text: str, drifted: set[str], root) -> str | None:
+    """Why a remembered fact must not be treated as reliable right now, or None if it is fine."""
+    hits = sorted(x for x in drifted if re.search(rf"(?<![\w-]){re.escape(x)}(?![\w-])", text))
+    if hits:
+        return (f"the glossary reports the container for {', '.join(hits)} changed since this was recorded")
+    gone = broken_paths(text, root)
+    if gone:
+        return f"it references files that no longer exist ({', '.join(gone[:3])})"
+    return None
 
 
 def build(ws: Workspace, state: LiveState | None = None, now: datetime | None = None) -> str:
@@ -40,11 +43,21 @@ def build(ws: Workspace, state: LiveState | None = None, now: datetime | None = 
     resolved, flags = [], []
     if state.containers is not None:
         resolved, flags = evaluate(state.containers, Glossary(ws), Ignores(ws), now)
-    drifted = _drifted_services(flags) if cfg.get("stale_caution") else set()
+    drifted = _drifted_services(flags)
+    quarantined = []
+    if cfg.get("quarantine", True):
+        kept = []
+        for e in fresh:
+            why = _quarantine_reason(e["text"], drifted, ws.root)
+            (quarantined.append((e, why)) if why else kept.append(e))
+        fresh = kept
 
     out += ["## Stable facts (remembered; safe to rely on)"]
-    out += [f"- {e['text']}" + (f" (asserted durable: {e['why']})" if e.get("why") else "") + _caution(e["text"], drifted)
+    out += [f"- {e['text']}" + (f" (asserted durable: {e['why']})" if e.get("why") else "")
             for e in fresh] or ["- (none yet)"]
+    if quarantined:
+        out += ["", "## QUARANTINED facts: probably stale. Do NOT act on these. Ask the user first."]
+        out += [f"- {e['text']}  [{why}]" for e, why in quarantined]
     if forced:
         out += ["", "## Stored by human override (not classified; treat with care)"]
         out += [f"- {e['text']} (reason: {e.get('forced_reason', '?')})" for e in forced]

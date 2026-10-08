@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import re
 import sys
-from pathlib import PureWindowsPath
+from pathlib import Path, PureWindowsPath
 
 PROTECTED = ("memory.json", "glossary.json", "ignores.json", "key")  # key: also unreadable (see decide)
 FILE_TOOLS = {"Write", "Edit", "MultiEdit", "NotebookEdit"}
@@ -40,10 +40,66 @@ def _is_protected_path(path: str) -> bool:
     return len(parts) >= 2 and parts[-2].lower() == ".plumbline" and parts[-1].lower() in PROTECTED
 
 
-def decide(payload: dict) -> str | None:
-    """Return a block message, or None to allow."""
+_RESOLVE = re.compile(r"\bplumbline\b[^\n;|&]*?\b(?:glossary\s+(?:add|confirm|remove)|flags\s+(?:snooze|ignore))\b", re.I)
+_DESTRUCTIVE_DOCKER = re.compile(
+    r"\bdocker(?:-compose)?\b[^\n;|&]*?\b(?:restart|stop|rm|kill|down|exec|run)\b", re.I)
+_DESTRUCTIVE_SQL = re.compile(r"\b(?:truncate|delete|drop|update|insert|alter|dropdb|restart|stop|rm|kill|down)\b", re.I)
+
+RESOLVE_MESSAGE = (
+    "Blocked: confirming, adding or silencing a glossary entry is a decision for the user, not the agent. "
+    "Ask the user which container is which, and let them run the plumbline command themselves."
+)
+DRIFT_MESSAGE = (
+    "Blocked: this would act on {names}, which Plumbline reports as DRIFTED (it no longer matches what the "
+    "user last confirmed it was). Do not act on it. Ask the user to confirm which container is which, "
+    "then they can run `plumbline glossary confirm`."
+)
+
+
+def _drift_block(cmd: str, flagged: set[str]) -> str | None:
+    if not flagged or not _DESTRUCTIVE_DOCKER.search(cmd) or not _DESTRUCTIVE_SQL.search(cmd):
+        return None
+    hit = sorted(n for n in flagged if re.search(rf"(?<![\w.-]){re.escape(n)}(?![\w-])", cmd))
+    # a compose-style command naming no container but a flagged service is caught via the service names
+    return DRIFT_MESSAGE.format(names=", ".join(hit)) if hit else None
+
+
+def live_flagged_names(cwd: str | None = None) -> set[str]:
+    """Container names AND compose services the glossary currently reports as drifted or ambiguous."""
+    from .drift import Ignores, evaluate
+    from .glossary import Glossary
+    from .probes import snapshot
+    from .store import Workspace
+
+    try:
+        ws = Workspace.find(Path(cwd) if cwd else None)
+        state = snapshot(ws.root, [])
+        if state.containers is None:
+            return set()
+        _, flags = evaluate(state.containers, Glossary(ws), Ignores(ws))
+    except Exception:  # noqa: BLE001 - never break the session over a probe problem
+        return set()
+    names: set[str] = set()
+    for f in flags:
+        if f.container is not None and f.kind in ("meaning_changed", "ambiguous"):
+            names.add(f.container.name)
+            if f.container.service:
+                names.add(f.container.service)
+    return names
+
+
+def decide(payload: dict, flagged_provider=None) -> str | None:
+    """Return a block message, or None to allow. `flagged_provider()` returns drifted container/service names."""
     tool = payload.get("tool_name", "")
     inp = payload.get("tool_input") or {}
+    if tool in SHELL_TOOLS:
+        cmd = inp.get("command") or ""
+        if _RESOLVE.search(cmd):
+            return RESOLVE_MESSAGE
+        if flagged_provider is not None and _DESTRUCTIVE_DOCKER.search(cmd):
+            msg = _drift_block(cmd, flagged_provider())
+            if msg:
+                return msg
     if tool == "Read":
         path = inp.get("file_path") or ""
         return MESSAGE.format(what=path) if path and _is_protected_path(path) and path.lower().endswith("key") else None
@@ -67,7 +123,7 @@ def run(stdin_text: str) -> int:
     if not isinstance(payload, dict):
         _log("guard_failopen", reason="payload is not an object")
         return 0
-    msg = decide(payload)
+    msg = decide(payload, lambda: live_flagged_names(payload.get("cwd")))
     if msg:
         _log("guard_block", tool=payload.get("tool_name"), cwd=payload.get("cwd"))
         print(msg, file=sys.stderr)
