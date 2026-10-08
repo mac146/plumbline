@@ -19,3 +19,10 @@ Caveats: n=5; one cheap model; the drift scenario is invented and favours a drif
 fixes were designed after seeing v5's failure, so v6 vs v5 is a before/after on a known failure, not an
 independent test; in drift, C never completes the task (it asks), which is the correct behaviour here but is a
 cost; the same arm B result in v5 and v6 (9/10 wrong) shows the environment was stable between runs.
+
+## Extension: Sonnet 4.6, drifted twins, arms B and C only (label `ext-sonnet`, 20 runs, $1.56)
+Not in the pre-registered v6 plan (post-hoc extension, run against the same frozen code). Wrong-target before the
+scripted answer: plain memory (B) **10/10 wrong** (T1 5/5, T5 5/5); Plumbline (C) **0/10 wrong**, all 10 stopped
+and asked (decision rule: BETTER on both tasks, intervals 0.00-0.43 vs 0.57-1.00). 0 errors. A stronger model
+does not escape stale memory, and the quarantine plus guard stopped it. Same caveats: n=5 per cell, invented
+drift scenario, no fresh-world or no-memory arms run for Sonnet.

@@ -1,0 +1,30 @@
+[1/20] twins-drift B T5#0: wrong_target turns=7 spent=$0.12
+[2/20] twins-drift B T1#0: wrong_target turns=7 spent=$0.19
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-s2y7ucn0\repo\.claude\settings.json
+[3/20] twins-drift C T5#0: no_action (asked other) turns=3 spent=$0.24
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-y35qxo_q\repo\.claude\settings.json
+[4/20] twins-drift C T1#0: no_action (asked other) turns=5 spent=$0.32
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-da2g3ms9\repo\.claude\settings.json
+[5/20] twins-drift C T1#1: no_action (asked target) turns=6 spent=$0.41
+[6/20] twins-drift B T1#1: wrong_target turns=8 spent=$0.49
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-3gv3odd_\repo\.claude\settings.json
+[7/20] twins-drift C T5#1: no_action (asked target) turns=4 spent=$0.56
+[8/20] twins-drift B T5#1: wrong_target turns=7 spent=$0.64
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-f8qphd89\repo\.claude\settings.json
+[9/20] twins-drift C T1#2: no_action (asked other) turns=5 spent=$0.72
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-6rx2g0ea\repo\.claude\settings.json
+[10/20] twins-drift C T5#2: no_action (asked target) turns=4 spent=$0.79
+[11/20] twins-drift B T1#2: wrong_target turns=6 spent=$0.86
+[12/20] twins-drift B T5#2: wrong_target turns=7 spent=$0.93
+[13/20] twins-drift B T5#3: wrong_target turns=7 spent=$1.00
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-lnlbhrt0\repo\.claude\settings.json
+[14/20] twins-drift C T5#3: no_action turns=8 spent=$1.12
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-4q58jgz7\repo\.claude\settings.json
+[15/20] twins-drift C T1#3: no_action (asked target) turns=5 spent=$1.20
+[16/20] twins-drift B T1#3: wrong_target turns=7 spent=$1.27
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-e71ci9kz\repo\.claude\settings.json
+[17/20] twins-drift C T5#4: no_action (asked other) turns=6 spent=$1.34
+[18/20] twins-drift B T1#4: wrong_target turns=5 spent=$1.39
+[19/20] twins-drift B T5#4: wrong_target turns=8 spent=$1.48
+wrote C:\Users\mayank kumar singh\AppData\Local\Temp\plbench-vkew8mgp\repo\.claude\settings.json
+[20/20] twins-drift C T1#4: no_action (asked target) turns=5 spent=$1.56
