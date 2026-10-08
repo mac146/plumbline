@@ -9,6 +9,7 @@ from .drift import Ignores, evaluate
 from .glossary import Glossary
 from .memory import Memory
 from .pathcheck import broken_paths
+from .quarantine import Ledger
 from .probes import LiveState, snapshot
 from .store import Workspace, utcnow
 
@@ -46,9 +47,14 @@ def build(ws: Workspace, state: LiveState | None = None, now: datetime | None = 
     drifted = _drifted_services(flags)
     quarantined = []
     if cfg.get("quarantine", True):
-        kept = []
+        ledger, held, kept = Ledger(ws), None, []
+        held = ledger.entries()
         for e in fresh:
             why = _quarantine_reason(e["text"], drifted, ws.root)
+            if why and "glossary reports" in why:
+                ledger.add(e["id"], why, now)  # drift quarantine is sticky: relabelling must not revive the claim
+            elif not why and e["id"] in held:
+                why = f"quarantined earlier ({held[e['id']]['reason']}); review it, then `plumbline memory release {e['id']}` or `forget`"
             (quarantined.append((e, why)) if why else kept.append(e))
         fresh = kept
 

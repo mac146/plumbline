@@ -18,11 +18,11 @@ import re
 import sys
 from pathlib import Path, PureWindowsPath
 
-PROTECTED = ("memory.json", "glossary.json", "ignores.json", "key")  # key: also unreadable (see decide)
+PROTECTED = ("memory.json", "glossary.json", "ignores.json", "quarantine.json", "key")  # key: also unreadable (see decide)
 FILE_TOOLS = {"Write", "Edit", "MultiEdit", "NotebookEdit"}
 SHELL_TOOLS = {"Bash", "PowerShell"}
 
-_MENTION = re.compile(r"\.plumbline[\\/]+(?:memory|glossary|ignores)\.json", re.I)
+_MENTION = re.compile(r"\.plumbline[\\/]+(?:memory|glossary|ignores|quarantine)\.json", re.I)
 _KEY = re.compile(r"\.plumbline[\\/]+key\b", re.I)  # the signing key is never readable or writable
 _READONLY = re.compile(r"^\s*(?:cat|type|Get-Content|gc|head|tail|less|more|grep|rg|ls|dir)\b", re.I)
 _REDIRECT = re.compile(r"(?<![<-])>{1,2}|\|\s*(?:tee|Out-File|Set-Content)\b", re.I)
@@ -40,10 +40,22 @@ def _is_protected_path(path: str) -> bool:
     return len(parts) >= 2 and parts[-2].lower() == ".plumbline" and parts[-1].lower() in PROTECTED
 
 
-_RESOLVE = re.compile(r"\bplumbline\b[^\n;|&]*?\b(?:glossary\s+(?:add|confirm|remove)|flags\s+(?:snooze|ignore))\b", re.I)
-_DESTRUCTIVE_DOCKER = re.compile(
-    r"\bdocker(?:-compose)?\b[^\n;|&]*?\b(?:restart|stop|rm|kill|down|exec|run)\b", re.I)
-_DESTRUCTIVE_SQL = re.compile(r"\b(?:truncate|delete|drop|update|insert|alter|dropdb|restart|stop|rm|kill|down)\b", re.I)
+_RESOLVE = re.compile(r"\bplumbline\b[^\n;|&]*?\b(?:glossary\s+(?:add|confirm|remove)|flags\s+(?:snooze|ignore)|memory\s+(?:release|forget|confirm))\b", re.I)
+_DOCKERISH = re.compile(r"\bdocker(?:-compose)?\b", re.I)
+# Anything that changes state. Deliberately broad: it only matters when the command also names a protected target.
+_DESTRUCTIVE = re.compile(
+    r"\b(?:truncate|delete|drop|dropdb|update|insert|alter|create|grant|revoke|reindex|vacuum|copy|reset"
+    r"|restart|stop|start|rm|kill|down|up|run|pause|unpause|rename|prune|mv|dd|mkfs|chmod|chown)\b"
+    r"|\bpsql\b[^\n;|&]*?\s-f\s|\s<\s*\S",
+    re.I)
+# Commands whose scope is "everything" even though they name no container.
+_ALL_SCOPE = re.compile(
+    r"\$\(\s*docker\b|`\s*docker\b"
+    r"|\bdocker\s+(?:system|container|volume|network|image)\s+prune\b|\bdocker\s+volume\s+rm\b"
+    r"|(?:docker-compose|docker\s+compose)\b(?:\s+-{1,2}\S+(?:\s+[^\s-]\S*)?)*\s+(?:down|stop|restart|kill|rm|up)\s*(?:-\S+\s*)*(?=$|[;&|])",
+    re.I)
+
+_PROTECT_MEANING = re.compile(r"never\s+modify|do\s+not\s+modify|must\s+not|read-?only|do\s+not\s+touch", re.I)
 
 RESOLVE_MESSAGE = (
     "Blocked: confirming, adding or silencing a glossary entry is a decision for the user, not the agent. "
@@ -56,12 +68,24 @@ DRIFT_MESSAGE = (
 )
 
 
-def _drift_block(cmd: str, flagged: set[str]) -> str | None:
-    if not flagged or not _DESTRUCTIVE_DOCKER.search(cmd) or not _DESTRUCTIVE_SQL.search(cmd):
+def _normalize(cmd: str) -> str:
+    """Strip quoting/line-continuations so 'dock'er', "docker" and docker\\<newline>restart look alike."""
+    return re.sub(r"\s+", " ", cmd.replace("\\\n", " ").replace("'", "").replace('"', "").replace("`", "`"))
+
+
+def _drift_block(cmd: str, protected: set[str]) -> str | None:
+    """Block a state-changing docker/compose command that names a protected target or has everything as scope."""
+    if not protected:
         return None
-    hit = sorted(n for n in flagged if re.search(rf"(?<![\w.-]){re.escape(n)}(?![\w-])", cmd))
-    # a compose-style command naming no container but a flagged service is caught via the service names
-    return DRIFT_MESSAGE.format(names=", ".join(hit)) if hit else None
+    norm = _normalize(cmd)
+    if not _DOCKERISH.search(norm) or not _DESTRUCTIVE.search(norm):
+        return None
+    hit = sorted(n for n in protected if re.search(rf"(?<![\w.-]){re.escape(n)}(?![\w-])", norm, re.I))
+    if hit:
+        return DRIFT_MESSAGE.format(names=", ".join(hit))
+    if _ALL_SCOPE.search(norm):
+        return DRIFT_MESSAGE.format(names="all containers (the command has no specific target)")
+    return None
 
 
 def live_flagged_names(cwd: str | None = None) -> set[str]:
@@ -80,11 +104,22 @@ def live_flagged_names(cwd: str | None = None) -> set[str]:
     except Exception:  # noqa: BLE001 - never break the session over a probe problem
         return set()
     names: set[str] = set()
+
+    def protect(c) -> None:
+        names.add(c.name)
+        if c.service:
+            names.add(c.service)
+        names.update(v for v in c.volumes if v and not v.startswith("/"))  # volume names, not host paths
+
     for f in flags:
         if f.container is not None and f.kind in ("meaning_changed", "ambiguous"):
-            names.add(f.container.name)
-            if f.container.service:
-                names.add(f.container.service)
+            protect(f.container)
+    # A container the user labelled "never modify" is protected on its own, whether or not anything drifted.
+    gl = Glossary(ws)
+    for c in state.containers:
+        m = gl.match(c)
+        if m and _PROTECT_MEANING.search(m.entry["meaning"]):
+            protect(c)
     return names
 
 
@@ -96,7 +131,7 @@ def decide(payload: dict, flagged_provider=None) -> str | None:
         cmd = inp.get("command") or ""
         if _RESOLVE.search(cmd):
             return RESOLVE_MESSAGE
-        if flagged_provider is not None and _DESTRUCTIVE_DOCKER.search(cmd):
+        if flagged_provider is not None and _DOCKERISH.search(cmd):
             msg = _drift_block(cmd, flagged_provider())
             if msg:
                 return msg

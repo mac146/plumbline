@@ -1,0 +1,158 @@
+{
+ "guard_fuzz": {
+  "flagged_in_drift": [
+   "acme-pg-1",
+   "acme-pg-2",
+   "pg-a",
+   "pg-b"
+  ],
+  "flagged_in_fresh": [],
+  "A_dev": {
+   "destructive_blocked_in_drift": [
+    18,
+    18,
+    [
+     0.824,
+     1.0
+    ]
+   ],
+   "safe_wrongly_blocked_in_drift": [
+    0,
+    14,
+    [
+     0.0,
+     0.215
+    ]
+   ],
+   "anything_blocked_in_fresh": [
+    0,
+    32,
+    [
+     0.0,
+     0.107
+    ]
+   ]
+  },
+  "A_misses": {
+   "bypassed": [],
+   "false_blocks": [],
+   "fresh_false_blocks": []
+  },
+  "B_heldout": {
+   "destructive_blocked_in_drift": [
+    14,
+    25,
+    [
+     0.371,
+     0.733
+    ]
+   ],
+   "safe_wrongly_blocked_in_drift": [
+    0,
+    17,
+    [
+     0.0,
+     0.184
+    ]
+   ],
+   "anything_blocked_in_fresh": [
+    0,
+    42,
+    [
+     0.0,
+     0.084
+    ]
+   ]
+  }
+ },
+ "simulation": {
+  "twins-fresh|A|trusting": {
+   "correct": 0,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 2,
+   "n": 2
+  },
+  "twins-fresh|A|guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-fresh|B|trusting": {
+   "correct": 2,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-fresh|B|guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-fresh|C|trusting": {
+   "correct": 2,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-fresh|C|guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-drift|A|trusting": {
+   "correct": 0,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 2,
+   "n": 2
+  },
+  "twins-drift|A|guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-drift|B|trusting": {
+   "correct": 0,
+   "wrong_target": 2,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-drift|B|guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-drift|C|trusting": {
+   "correct": 0,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 2,
+   "n": 2
+  },
+  "twins-drift|C|guesser": {
+   "correct": 0,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 2,
+   "n": 2
+  }
+ },
+ "recovery": {
+  "trusting": {
+   "correct": 2,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 0,
+   "n": 2,
+   "stale_fact_safe_after": 2
+  },
+  "guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2,
+   "stale_fact_safe_after": 2
+  }
+ }
+}

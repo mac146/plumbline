@@ -97,3 +97,90 @@ class ContextQuarantinePathTests(Base):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ColdCorpusRegressionTests(unittest.TestCase):
+    """The guard fuzz corpora from bench/cold.py, with a fixed protected set (no docker, no sandbox)."""
+
+    PROTECTED = {"acme-pg-1", "acme-pg-2", "pg-a", "pg-b", "acme_vol_1", "acme_vol_2"}
+
+    def blocked(self, cmd):
+        return decide({"tool_name": "Bash", "tool_input": {"command": cmd}}, lambda: self.PROTECTED) is not None
+
+    def test_destructive_variants_are_blocked_and_safe_ones_pass(self):
+        from bench import cold
+        for cmd in cold.A_BLOCK + cold.B_BLOCK + cold.C_VISIBLE:
+            self.assertTrue(self.blocked(cmd), cmd)
+        for cmd in cold.A_ALLOW + cold.B_ALLOW + cold.C_ALLOW:
+            self.assertFalse(self.blocked(cmd), cmd)
+
+    def test_known_blind_spot_is_documented_not_pretended_away(self):
+        from bench import cold
+        self.assertFalse(any(self.blocked(c) for c in cold.C_INDIRECT))  # if this starts failing, update the README
+
+    def test_a_container_labelled_never_modify_is_protected_without_any_drift(self):
+        from bench.sandbox import _shimmed, build
+        import tempfile
+        from pathlib import Path
+        from plumbline.guard import live_flagged_names
+        with tempfile.TemporaryDirectory(prefix="prot ") as d:
+            sb = build("C", "T1", Path(d).resolve() / "s", "twins-fresh", 0)
+            with _shimmed(sb.env):
+                names = live_flagged_names(str(sb.repo))
+        self.assertTrue({"acme-pg-2", "pg-b"} <= names)
+        self.assertFalse({"acme-pg-1", "pg-a"} & names)  # the dev container stays usable
+
+
+class StickyQuarantineTests(Base):
+    def _fact(self):
+        from plumbline.memory import Memory
+        r = Memory(self.ws).remember("The dev database is the pg-a service in docker-compose.yml; use it for local data work",
+                                     type="config", why="service names in the compose file are fixed")
+        return r.entry["id"]
+
+    def _entry_for(self, service):
+        from plumbline.glossary import Glossary
+        from tests.test_plumbline import containers, ps_line
+        (c,) = containers(ps_line(name=f"acme-{service}", labels=f"com.docker.compose.service={service}"))
+        gl = Glossary(self.ws)
+        return gl, c
+
+    def test_relabelling_quarantines_old_claims_and_release_is_human_only(self):
+        from plumbline.context import build
+        from plumbline.probes import LiveState
+        from plumbline.quarantine import Ledger
+        fid = self._fact()
+        gl, c = self._entry_for("pg-a")
+        e = gl.add(c, "dev database")
+        self.assertEqual(Ledger(self.ws).entries(), {})
+        gl.add(c, "customer data; never modify")  # same selector, new meaning: the old claim is now untrustworthy
+        self.assertIn(fid, Ledger(self.ws).entries())
+        out = build(self.ws, LiveState(containers=[]))
+        self.assertIn("QUARANTINED", out)
+        self.assertNotIn("dev database is the pg-a", out.split("## QUARANTINED")[0])
+        self.assertTrue(Ledger(self.ws).release(fid))
+        self.assertNotIn("QUARANTINED", build(self.ws, LiveState(containers=[])))
+
+    def test_removing_a_label_also_quarantines_and_idempotent_readd_does_not(self):
+        from plumbline.quarantine import Ledger
+        fid = self._fact()
+        gl, c = self._entry_for("pg-a")
+        e = gl.add(c, "dev database")
+        gl.add(c, "dev database")  # identical meaning: nothing changed
+        self.assertEqual(Ledger(self.ws).entries(), {})
+        gl.remove(e["id"])
+        self.assertIn(fid, Ledger(self.ws).entries())
+
+    def test_tampered_ledger_entry_is_ignored_and_agent_cannot_release(self):
+        from plumbline.guard import decide
+        from plumbline.quarantine import Ledger
+        fid = self._fact()
+        gl, c = self._entry_for("pg-a")
+        e = gl.add(c, "dev database")
+        gl.remove(e["id"])
+        recs = self.ws.read_json("quarantine.json", [])
+        recs[0]["reason"] = "forged"
+        self.ws.write_json("quarantine.json", recs)
+        self.assertEqual(Ledger(self.ws).entries(), {})
+        self.assertIsNotNone(decide(bash(f"plumbline memory release {fid}")))
+        self.assertIsNotNone(decide({"tool_name": "Write", "tool_input": {"file_path": str(self.ws.dir / "quarantine.json")}}))

@@ -177,3 +177,28 @@ Changes, all unit-tested, **none re-measured against agents yet**:
 Still open: the gate leaks unseen volatile phrasings; `--why` from an agent defeats default-deny; the shell
 guard is bypassable (signatures are the backstop); the bench pins (`prereg-v5`) no longer verify because the
 Plumbline source changed, so any scored re-run needs a new freeze (v6).
+
+## Cold test (no model calls): does the architecture work?
+
+`python -m bench.cold` runs the real pipeline (context, guard hook, fake docker, world checker) with scripted
+agents and a command-variant fuzz, at zero token cost. It tests the **mechanism**, not how a real model behaves.
+
+| Check | Before hardening | After |
+|---|---|---|
+| Destructive commands blocked, drifted world, held-out corpus B (written before the fixes) | 14/25 | 25/25 (optimistic: I knew the weak spots) |
+| Same, **fresh corpus C** (written after, scored once) | n/a | **20/20** (95% CI 0.84-1.00) |
+| Safe commands wrongly blocked (A, B, C) | 0/14, 0/17 | 0/14, 0/17, 0/12 |
+| Dev-only commands blocked in the fresh world | 0 | 0/12 (the customer-data container: 6/6, 13/13 blocked) |
+| Scripted agents, drifted world, memory only | wrong 2/2 (trusting) | wrong 2/2 |
+| Scripted agents, drifted world, Plumbline | wrong 0/2 | wrong 0/2 (trusting asks, guesser blocked) |
+| Recovery: stale "dev is pg-a" fact revived as safe after the human relabels | 2/2 revived | 0/2 |
+| **Indirect commands** (`make reset-db`, scripts, dynamically built names) | n/a | **0/8 blocked** |
+
+Gaps this found and fixed: guard missed uppercase / quoted / `$(...)` / volume / `-f file` / all-container
+forms; relabelling revived stale facts (now a signed, sticky quarantine ledger swept at relabel time, released
+only by a human via `memory release`); a container labelled "never modify" was unprotected unless drifted.
+
+**Open architectural gap:** the guard reads command strings, so anything indirect (a Makefile target, a script,
+a built-up name) is invisible to it. The fix is to enforce at the docker CLI boundary (a wrapper on PATH that
+applies the same policy to every invocation, including those made by scripts). Trade-off to know: with a
+"never modify" container present, all-container verbs (`compose down`, `prune`) are blocked for the agent.

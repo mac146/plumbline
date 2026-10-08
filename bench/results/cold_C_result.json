@@ -1,0 +1,26 @@
+{
+ "visible_destructive_blocked": [
+  20,
+  20,
+  [
+   0.839,
+   1.0
+  ]
+ ],
+ "indirect_blocked_(known_blind_spot)": [
+  0,
+  8,
+  [
+   0.0,
+   0.324
+  ]
+ ],
+ "safe_wrongly_blocked": [
+  0,
+  12,
+  [
+   0.0,
+   0.243
+  ]
+ ]
+}

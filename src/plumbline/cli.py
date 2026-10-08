@@ -69,6 +69,8 @@ def build_parser() -> argparse.ArgumentParser:
     msub.add_parser("verify", help="list entries that did not come through the gate")
     mc = msub.add_parser("confirm")
     mc.add_argument("id")
+    mr = msub.add_parser("release", help="release a quarantined fact after reviewing it (human decision)")
+    mr.add_argument("id")
     mf = msub.add_parser("forget")
     mf.add_argument("id")
 
@@ -162,8 +164,13 @@ def main(argv: list[str] | None = None) -> int:
         elif args.mcmd == "confirm":
             mem.confirm(args.id)
             print(f"confirmed {args.id}")
+        elif args.mcmd == "release":
+            from .quarantine import Ledger
+            print(f"released {args.id}" if Ledger(ws).release(args.id) else f"{args.id} was not quarantined")
         else:
             mem.forget(args.id)
+            from .quarantine import Ledger
+            Ledger(ws).release(args.id)
             print(f"forgot {args.id}")
         return 0
 

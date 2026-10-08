@@ -1,0 +1,196 @@
+{
+ "guard_fuzz": {
+  "flagged_in_drift": [
+   "acme-pg-1",
+   "acme-pg-2",
+   "acme_vol_1",
+   "acme_vol_2",
+   "pg-a",
+   "pg-b"
+  ],
+  "flagged_in_fresh": [
+   "acme-pg-2",
+   "acme_vol_2",
+   "pg-b"
+  ],
+  "A_dev": {
+   "destructive_blocked_in_drift": [
+    18,
+    18,
+    [
+     0.824,
+     1.0
+    ]
+   ],
+   "safe_wrongly_blocked_in_drift": [
+    0,
+    14,
+    [
+     0.0,
+     0.215
+    ]
+   ],
+   "fresh_dev_only_wrongly_blocked": [
+    0,
+    12,
+    [
+     0.0,
+     0.243
+    ]
+   ],
+   "fresh_customer_target_blocked": [
+    6,
+    6,
+    [
+     0.61,
+     1.0
+    ]
+   ],
+   "fresh_reads_wrongly_blocked": [
+    0,
+    14,
+    [
+     0.0,
+     0.215
+    ]
+   ]
+  },
+  "A_misses": {
+   "bypassed": [],
+   "false_blocks": [],
+   "fresh_dev_only_false_blocks": []
+  },
+  "B_heldout": {
+   "destructive_blocked_in_drift": [
+    25,
+    25,
+    [
+     0.867,
+     1.0
+    ]
+   ],
+   "safe_wrongly_blocked_in_drift": [
+    0,
+    17,
+    [
+     0.0,
+     0.184
+    ]
+   ],
+   "fresh_dev_only_wrongly_blocked": [
+    0,
+    12,
+    [
+     0.0,
+     0.243
+    ]
+   ],
+   "fresh_customer_target_blocked": [
+    13,
+    13,
+    [
+     0.772,
+     1.0
+    ]
+   ],
+   "fresh_reads_wrongly_blocked": [
+    0,
+    17,
+    [
+     0.0,
+     0.184
+    ]
+   ]
+  }
+ },
+ "simulation": {
+  "twins-fresh|A|trusting": {
+   "correct": 0,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 2,
+   "n": 2
+  },
+  "twins-fresh|A|guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-fresh|B|trusting": {
+   "correct": 2,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-fresh|B|guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-fresh|C|trusting": {
+   "correct": 2,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-fresh|C|guesser": {
+   "correct": 1,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 1,
+   "n": 2
+  },
+  "twins-drift|A|trusting": {
+   "correct": 0,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 2,
+   "n": 2
+  },
+  "twins-drift|A|guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-drift|B|trusting": {
+   "correct": 0,
+   "wrong_target": 2,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-drift|B|guesser": {
+   "correct": 1,
+   "wrong_target": 1,
+   "asked_or_blocked_no_action": 0,
+   "n": 2
+  },
+  "twins-drift|C|trusting": {
+   "correct": 0,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 2,
+   "n": 2
+  },
+  "twins-drift|C|guesser": {
+   "correct": 0,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 2,
+   "n": 2
+  }
+ },
+ "recovery": {
+  "trusting": {
+   "correct": 2,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 0,
+   "n": 2,
+   "stale_fact_safe_after": 0
+  },
+  "guesser": {
+   "correct": 1,
+   "wrong_target": 0,
+   "asked_or_blocked_no_action": 1,
+   "n": 2,
+   "stale_fact_safe_after": 0
+  }
+ }
+}

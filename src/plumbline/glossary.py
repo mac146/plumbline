@@ -93,7 +93,10 @@ class Glossary:
         if len(slug) > 32:
             slug = slug[:32].rsplit("-", 1)[0]  # cut at a word boundary
         slug = slug or "entry"
-        entries = [e for e in self.all() if e["selector"] != sel]  # re-adding replaces
+        for old in self.all():
+            if old["selector"] == sel and old.get("meaning") != meaning:
+                self._quarantine_facts_about(old, "its glossary label was changed")  # re-adding replaces
+        entries = [e for e in self.all() if e["selector"] != sel]
         entry = {
             "id": slug,
             "meaning": meaning,
@@ -110,7 +113,23 @@ class Glossary:
         kept = [e for e in entries if e["id"] != eid]
         if len(kept) == len(entries):
             raise KeyError(eid)
+        self._quarantine_facts_about(next(e for e in entries if e["id"] == eid), "its glossary label was removed")
         self._save(kept)
+
+    def _quarantine_facts_about(self, entry: dict, why: str) -> None:
+        """Relabelling is the moment a remembered claim about that service becomes untrustworthy. Record it NOW
+        (not only when a later session notices drift), so the old claim cannot silently return as 'safe'."""
+        service = (entry.get("selector") or {}).get("service")
+        if not service:
+            return
+        from .memory import Memory
+        from .quarantine import Ledger
+
+        pat = re.compile(rf"(?<![\w-]){re.escape(service)}(?![\w-])")
+        ledger = Ledger(self.ws)
+        for fact in Memory(self.ws).all():
+            if pat.search(fact.get("text", "")):
+                ledger.add(fact["id"], f"{why} ({entry.get('meaning', '?')})")
 
     def confirm(self, eid: str, c: Container, now: datetime | None = None) -> dict:
         """Human re-confirmed the label still holds for the container's current identity."""
