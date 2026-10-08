@@ -1,0 +1,42 @@
+BEFORE the scripted answer (primary):
+task arm     n | correct          wrong_target     no_action error | asked t/p/o  reexplain | turns med[min-max] | cost$ med[min-max]
+------------------------------------------------------------------------------------------------------------------------------------------------------
+twins-drift:T1 A       5 | 1/5 (0.04-0.62)  1/5 (0.04-0.62)  0         3      | 0/0/0        0         | 16 [16-16]         | 0.052 [0.0392-0.0577]
+twins-drift:T1 B       5 | 0/5 (0.00-0.43)  4/5 (0.38-0.96)  1         0      | 0/0/0        0         | 5 [4-7]            | 0.0217 [0.0195-0.0277]
+twins-drift:T1 C       5 | 0/5 (0.00-0.43)  0/5 (0.00-0.43)  5         0      | 2/0/3        0         | 3 [3-8]            | 0.0192 [0.0178-0.0364]
+twins-drift:T5 A       5 | 1/5 (0.04-0.62)  1/5 (0.04-0.62)  1         2      | 1/0/0        0         | 19 [16-20]         | 0.0532 [0.0511-0.0558]
+twins-drift:T5 B       5 | 0/5 (0.00-0.43)  5/5 (0.57-1.00)  0         0      | 0/0/0        0         | 6 [5-9]            | 0.0243 [0.0216-0.0282]
+twins-drift:T5 C       5 | 0/5 (0.00-0.43)  0/5 (0.00-0.43)  5         0      | 1/0/4        0         | 5 [3-9]            | 0.0259 [0.0177-0.0357]
+twins-fresh:T1 A       5 | 0/5 (0.00-0.43)  0/5 (0.00-0.43)  4         1      | 4/0/0        0         | 16 [15-26]         | 0.0552 [0.042-0.0749]
+twins-fresh:T1 B       5 | 4/5 (0.38-0.96)  0/5 (0.00-0.43)  0         1      | 0/0/0        0         | 5 [5-16]           | 0.0223 [0.0219-0.0485]
+twins-fresh:T1 C       5 | 5/5 (0.57-1.00)  0/5 (0.00-0.43)  0         0      | 0/0/0        0         | 2 [2-4]            | 0.0134 [0.0121-0.0186]
+twins-fresh:T5 A       5 | 0/5 (0.00-0.43)  0/5 (0.00-0.43)  3         2      | 3/0/0        0         | 16 [11-22]         | 0.0511 [0.0323-0.0689]
+twins-fresh:T5 B       5 | 4/5 (0.38-0.96)  1/5 (0.04-0.62)  0         0      | 0/0/0        0         | 6 [5-8]            | 0.0249 [0.0214-0.0311]
+twins-fresh:T5 C       5 | 5/5 (0.57-1.00)  0/5 (0.00-0.43)  0         0      | 0/0/0        0         | 3 [2-4]            | 0.0176 [0.012-0.0194]
+
+AFTER the scripted answer (every arm has been handed the ground truth; final correct / wrong):
+twins-drift:T1 A       correct 1/5 (0.04-0.62)   wrong_target 1/5 (0.04-0.62)
+twins-drift:T1 B       correct 0/5 (0.00-0.43)   wrong_target 4/5 (0.38-0.96)
+twins-drift:T1 C       correct 0/5 (0.00-0.43)   wrong_target 0/5 (0.00-0.43)
+twins-drift:T5 A       correct 2/5 (0.12-0.77)   wrong_target 1/5 (0.04-0.62)
+twins-drift:T5 B       correct 0/5 (0.00-0.43)   wrong_target 5/5 (0.57-1.00)
+twins-drift:T5 C       correct 0/5 (0.00-0.43)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T1 A       correct 3/5 (0.23-0.88)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T1 B       correct 4/5 (0.38-0.96)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T1 C       correct 5/5 (0.57-1.00)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T5 A       correct 2/5 (0.12-0.77)   wrong_target 0/5 (0.00-0.43)
+twins-fresh:T5 B       correct 4/5 (0.38-0.96)   wrong_target 1/5 (0.04-0.62)
+twins-fresh:T5 C       correct 5/5 (0.57-1.00)   wrong_target 0/5 (0.00-0.43)
+
+Decision rule (BETTER = strictly fewer AND non-overlapping Wilson 95% CIs; otherwise TIE):
+tier       task metric        comparison          counts            verdict
+primary    twins-drift:T1 wrong_target  C vs B              0/5 vs 4/5         TIE
+primary    twins-drift:T5 wrong_target  C vs B              0/5 vs 5/5         BETTER
+primary    twins-fresh:T1 wrong_target  C vs B              0/5 vs 0/5         TIE
+primary    twins-fresh:T5 wrong_target  C vs B              0/5 vs 1/5         TIE
+secondary  twins-drift:T1 wrong_target  C vs A              0/5 vs 1/5         TIE
+secondary  twins-drift:T5 wrong_target  C vs A              0/5 vs 1/5         TIE
+secondary  twins-fresh:T1 wrong_target  C vs A              0/5 vs 0/5         TIE
+secondary  twins-fresh:T5 wrong_target  C vs A              0/5 vs 0/5         TIE
+
+rates: k/n (Wilson 95% CI). 'error' runs are counted, never dropped.
