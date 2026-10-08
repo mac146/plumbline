@@ -103,6 +103,10 @@ def build_parser() -> argparse.ArgumentParser:
     hk = sub.add_parser("hooks", help="print (or --write) Claude Code hook settings")
     hk.add_argument("--write", action="store_true", help="merge into ./.claude/settings.json")
 
+    wr = sub.add_parser("wrap", help="install docker/docker-compose policy wrappers; put DIR first on PATH")
+    wr.add_argument("--dir", type=Path, required=True)
+    wr.add_argument("--real-docker", help="path of the real docker (default: found on PATH at run time)")
+
     mt = sub.add_parser("metrics")
     mt.add_argument("--json", action="store_true")
     return p
@@ -121,6 +125,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "hooks":
         from .hooks import emit
         return emit(Path.cwd(), write=args.write)
+    if args.cmd == "wrap":
+        from .dockerwrap import install
+        for p in install(args.dir.resolve(), args.real_docker):
+            print(f"wrote {p}")
+        print(f"now put {args.dir.resolve()} first on PATH")
+        return 0
     try:
         ws = Workspace.find()
     except WorkspaceNotFound as e:

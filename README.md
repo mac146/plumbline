@@ -202,3 +202,13 @@ only by a human via `memory release`); a container labelled "never modify" was u
 a built-up name) is invisible to it. The fix is to enforce at the docker CLI boundary (a wrapper on PATH that
 applies the same policy to every invocation, including those made by scripts). Trade-off to know: with a
 "never modify" container present, all-container verbs (`compose down`, `prune`) are blocked for the agent.
+
+### Docker CLI wrapper (closes the indirect-command gap)
+
+`plumbline wrap --dir <D>` writes `docker` / `docker-compose` wrappers; put `<D>` first on PATH. While anything is
+protected (drifted, ambiguous, or labelled "never modify"), the wrapper blocks state-changing verbs on it and
+"everything" verbs (`compose down`, `prune`), and allows `exec`/`run` only when demonstrably read-only
+(`psql -c "SELECT ..."`, `pg_isready`). Because it sits at the binary, Makefiles, scripts and `subprocess` calls
+are covered; tests show a `reset_db` script calling `docker restart` is blocked and `docker ps` still works.
+Not covered: calling the real docker by absolute path (the string guard still sees the names) and the docker
+socket/API. 120 tests pass.

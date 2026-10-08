@@ -35,7 +35,9 @@ def run_probe(argv: tuple[str, ...], cwd: Path | None = None, timeout: float = 5
         raise ProbeNotAllowed(f"not on the read-only allowlist: {' '.join(argv)}")
     # The allowlist check is on the logical argv; resolving via PATH/PATHEXT afterwards lets
     # Windows find `docker.cmd`-style shims that CreateProcess alone would miss.
-    exe = shutil.which(argv[0]) or argv[0]
+    # PLUMBLINE_REAL_DOCKER lets the probes reach the real docker even when the policy wrapper shadows it on PATH.
+    exe = (os.environ.get("PLUMBLINE_REAL_DOCKER") if argv[0] == "docker" else None) \
+        or shutil.which(argv[0]) or argv[0]
     try:
         p = subprocess.run(
             [exe, *argv[1:]], cwd=cwd, capture_output=True, text=True, timeout=timeout, shell=False

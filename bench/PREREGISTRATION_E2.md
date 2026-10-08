@@ -1,11 +1,36 @@
 # Pre-registration v4: harder tests (E1 weaker model, E2 identical twins, E3 real stale memory files)
 
-Version v5 (supersedes aborted v4), written after the v3 results (`results-v3`) and before any v4 scored run. Frozen by
+Version v6 (supersedes v5 for E2; v4 aborted), written after the v3 results (`results-v3`) and before any v4 scored run. Frozen by
 `python -m bench.freeze write` (pins this file, `PREREGISTRATION.md`, the bench code, the audit script and the
 Plumbline source in `bench/FROZEN.sha256`) and by the git tag `prereg-v5`. The scored runner refuses to
 start if anything pinned differs. Per-run provenance (claude version, requested and reported model, commit,
 dirty flag, freeze hash, timestamp) is recorded in every row. The v3 design, arms, metrics, scripted user,
 question classifier and **decision rule** in `PREREGISTRATION.md` apply unchanged except where this file says so.
+
+## Changelog v6 (supersedes v5 for E2; tag `prereg-v6`)
+
+- The v5-era Haiku twins run (80 runs, 5 per cell, label `main`, file `bench/results/e2-haiku.jsonl`, run
+  against the v5 source) is **kept as the "before" result** and is not mixed with v6. v5 finding: Plumbline (C)
+  acted on the wrong container in 10/10 drifted runs, because the stale fact still sat under "safe to rely on".
+- **v6 source changes (all in `src/plumbline/`, pinned):** (1) facts naming a drifted service, or referencing
+  files that no longer exist, are QUARANTINED instead of listed as safe; (2) quarantine is sticky (a signed
+  ledger swept when a glossary label is changed or removed; only a human can `memory release`); (3) a
+  container the user labelled "never modify" is protected without any drift; (4) the PreToolUse guard blocks
+  state-changing docker commands that name a protected target or have everything as scope, and blocks the
+  agent from resolving flags itself; (5) NEW: `dockerwrap`, a policy wrapper in front of `docker` /
+  `docker-compose` on PATH in arm C, so scripts and Makefiles are policed as well.
+- Cold, zero-token testing (`bench/cold.py`, README) preceded this freeze: guard fuzz corpora A (dev), B
+  (held-out, optimistic), C (fresh, scored once: 20/20 visible blocked, 0/8 indirect blocked before the wrapper,
+  0/12 false blocks), scripted-agent simulation, recovery path. The wrapper was added after the indirect gap.
+- **v6 run plan (reduced to fit usage limits; a deviation from the 10 runs per cell of v3-v5, stated up front):**
+  model `claude-haiku-4-5-20251001`, scenarios `twins-fresh` and `twins-drift`, arms **A, B, C** (C2 is dropped:
+  its annotation option no longer exists, so it would duplicate C), tasks T1 and T5, **5 runs per cell** = 60
+  runs, output `bench/results/e2-haiku-v6.jsonl`, total cost cap `--max-total-usd 3`. Primary comparison per
+  task in `twins-drift`: C vs B on `wrong_target` before the scripted answer; decision rule unchanged. At n=5
+  only a very large difference can be BETTER; ties are expected for anything smaller.
+- Honest expectation (can be wrong): C should now be wrong in far fewer drifted runs than v5's 10/10, because
+  there is no safe-listed stale fact and destructive actions on the twins are blocked. If C is still frequently
+  wrong, the residual cause will be looked up in the transcripts rather than assumed.
 
 ## Changelog (v5 supersedes v4; tag `prereg-v5`)
 
