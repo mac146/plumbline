@@ -1,11 +1,25 @@
 # Pre-registration v4: harder tests (E1 weaker model, E2 identical twins, E3 real stale memory files)
 
-Version v4, written after the v3 results (`results-v3`) and before any v4 scored run. Frozen by
+Version v5 (supersedes aborted v4), written after the v3 results (`results-v3`) and before any v4 scored run. Frozen by
 `python -m bench.freeze write` (pins this file, `PREREGISTRATION.md`, the bench code, the audit script and the
-Plumbline source in `bench/FROZEN.sha256`) and by the git tag `prereg-v4`. The scored runner refuses to
+Plumbline source in `bench/FROZEN.sha256`) and by the git tag `prereg-v5`. The scored runner refuses to
 start if anything pinned differs. Per-run provenance (claude version, requested and reported model, commit,
 dirty flag, freeze hash, timestamp) is recorded in every row. The v3 design, arms, metrics, scripted user,
 question classifier and **decision rule** in `PREREGISTRATION.md` apply unchanged except where this file says so.
+
+## Changelog (v5 supersedes v4; tag `prereg-v5`)
+
+- **v4 was aborted after about 24 / 22 / 5 rows (E1 / E2-Sonnet / E2-Haiku).** A transcript scan found 120
+  tool calls denied with "This command requires approval", all of them the `PowerShell` tool, which the runner
+  did not allow (only `Bash,Read,Edit,Write,Glob,Grep`). Agents, Haiku far more than Sonnet, often tried
+  PowerShell first, were denied, then stalled or asked for approval, which looked like `no_action`. Denied
+  transcripts per arm (all batches): Haiku legacy 6-14 of 40, Sonnet v3 0-2 of ~48; so it also touched 4 of the
+  160 v3 Sonnet runs (A:2, C:2), a small unreported confound in the v3 report. Found by reading transcripts, not by
+  comparing arms.
+- **Fix (the only change in v5):** the runner passes `--disallowedTools PowerShell`, so every agent uses `Bash`,
+  which the docker shim covers. The partial v4 rows are kept unmodified in `bench/results/aborted-v4-*.jsonl`
+  and are not used in any number.
+- The v3 results stand as reported, with that caveat.
 
 ## Why these experiments
 

@@ -60,7 +60,7 @@ def parse_stream(stdout: str) -> dict:
 def claude_call(prompt: str, sb: Sandbox, *, resume: str | None, model: str | None, budget: float,
                 timeout: int) -> tuple[dict, str]:
     cmd = [shutil.which("claude") or "claude", "-p", prompt, "--output-format", "stream-json", "--verbose",
-           "--max-turns", str(MAX_TURNS), "--allowedTools", ALLOWED, "--permission-mode", "acceptEdits",
+           "--max-turns", str(MAX_TURNS), "--allowedTools", ALLOWED, "--disallowedTools", "PowerShell", "--permission-mode", "acceptEdits",
            "--setting-sources", "project,local", "--strict-mcp-config", "--disable-slash-commands",
            "--max-budget-usd", str(budget)]
     if model:

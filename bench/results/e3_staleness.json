@@ -1,0 +1,100 @@
+{
+ "summary": {
+  "distinct_files": 4,
+  "path_refs": {
+   "exact": 24,
+   "moved": 25,
+   "missing": 6,
+   "outside_repo": 9
+  },
+  "path_refs_not_exact_of_resolvable": "31/55",
+  "gate_verdicts_all_sentences": {
+   "unproven": 159,
+   "volatile": 2,
+   "stable": 24,
+   "semi_stable": 11
+  },
+  "gate_verdicts_sentences_with_broken_path": {
+   "unproven": 13
+  }
+ },
+ "files": {
+  "file1": {
+   "bytes": 7385,
+   "distinct_path_refs": 20,
+   "refs": {
+    "exact": 8,
+    "moved": 12
+   },
+   "days_since_last_edit": 31.0,
+   "commits_since_last_edit": 1225,
+   "referenced_files_changed_since": 5,
+   "sentences": {
+    "unproven": 60,
+    "volatile": 1,
+    "stable": 7,
+    "semi_stable": 2
+   },
+   "sentences_with_broken_path": {
+    "unproven": 4
+   }
+  },
+  "file2": {
+   "bytes": 325,
+   "distinct_path_refs": 1,
+   "refs": {
+    "missing": 1
+   },
+   "days_since_last_edit": 0.9,
+   "commits_since_last_edit": 5,
+   "referenced_files_changed_since": 0,
+   "sentences": {
+    "unproven": 6
+   },
+   "sentences_with_broken_path": {
+    "unproven": 1
+   }
+  },
+  "file3": {
+   "bytes": 7648,
+   "distinct_path_refs": 23,
+   "refs": {
+    "exact": 8,
+    "moved": 1,
+    "outside_repo": 9,
+    "missing": 5
+   },
+   "days_since_last_edit": 0.0,
+   "commits_since_last_edit": 0,
+   "referenced_files_changed_since": 0,
+   "sentences": {
+    "unproven": 33,
+    "stable": 10,
+    "semi_stable": 7
+   },
+   "sentences_with_broken_path": {
+    "unproven": 4
+   }
+  },
+  "file4": {
+   "bytes": 7276,
+   "distinct_path_refs": 20,
+   "refs": {
+    "exact": 8,
+    "moved": 12
+   },
+   "days_since_last_edit": 17.0,
+   "commits_since_last_edit": 455,
+   "referenced_files_changed_since": 5,
+   "sentences": {
+    "unproven": 60,
+    "volatile": 1,
+    "stable": 7,
+    "semi_stable": 2
+   },
+   "sentences_with_broken_path": {
+    "unproven": 4
+   }
+  }
+ }
+}

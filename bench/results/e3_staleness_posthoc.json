@@ -1,0 +1,13 @@
+{
+ "status": "POST-HOC, not pre-registered",
+ "distinct_files": 4,
+ "refs": {
+  "moved_or_renamed": 2,
+  "exact": 24,
+  "suffix_match": 23,
+  "missing": 6,
+  "outside_repo": 9
+ },
+ "clearly_stale_missing": "6/55",
+ "possibly_stale_missing_or_moved": "8/55"
+}
